@@ -89,7 +89,7 @@
   .crash-bg {
     position: absolute;
     inset: 0;
-    background-image: url('images/1774734926378_yankee.jpg');
+    background-image: url('1774734926378_yankee.jpg');
     background-size: cover;
     background-position: center 40%;
     filter: grayscale(60%) brightness(0.35);
@@ -529,7 +529,7 @@
     </div>
 
     <div class="story-sidebar">
-      <img src="images/Yankee_Nate_805x897.jpg" alt="Nathan Carriker with the Yankee" class="sidebar-photo">
+      <img src="Yankee_Nate_805x897.jpg" alt="Nathan Carriker with the Yankee" class="sidebar-photo">
       <p class="sidebar-caption">Nathan with "The Blue Feather"</p>
 
       <div class="sidebar-stat-block">
@@ -572,7 +572,7 @@
 <section class="hospital-strip">
   <div class="hospital-strip-inner">
     <div>
-      <img src="images/Xmas_in_Hospital.jpg" alt="Nathan in the hospital, birthday 1994" class="hospital-photo">
+      <img src="Xmas_in_Hospital.jpg" alt="Nathan in the hospital, birthday 1994" class="hospital-photo">
       <p class="hospital-caption">My 25th birthday &nbsp;·&nbsp; December 21, 1994 &nbsp;·&nbsp; Desert Hospital</p>
     </div>
     <div class="hospital-text">
@@ -600,15 +600,28 @@
       </iframe>
     </div>
 
-    <img src="images/headline2.jpg" alt="Desert Sun headline: Pilot rescued after 20 hours" class="headline-photo">
+    <div style="margin-top:60px;">
+      <h2 class="video-title" style="margin-bottom:24px;">Raw footage — Riverside County Sheriff's Aviation Unit &nbsp;·&nbsp; December 15, 1994</h2>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/79CNh5h6Qp8"
+          title="Martinez Canyon Raw Footage 1994"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <img src="headline2.jpg" alt="Desert Sun headline: Pilot rescued after 20 hours" class="headline-photo">
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:860px; margin:40px auto 0;">
       <div>
-        <img src="images/Star80.jpg" alt="Nathan with rescue team and helicopter N91RC during rehab" style="width:100%; filter:grayscale(20%) sepia(10%); border:1px solid rgba(201,168,76,0.15);">
+        <img src="Star80.jpg" alt="Nathan with rescue team and helicopter N91RC during rehab" style="width:100%; filter:grayscale(20%) sepia(10%); border:1px solid rgba(201,168,76,0.15);">
         <p class="video-caption" style="margin-top:12px;">With Linda, John, and Ron beside N91RC &nbsp;·&nbsp; During rehabilitation, 1995 &nbsp;·&nbsp; Note the canes.</p>
       </div>
       <div>
-        <img src="images/FnFreunion.jpg" alt="Reunion on Fox and Friends, 2016" style="width:100%; filter:grayscale(10%); border:1px solid rgba(201,168,76,0.15);">
+        <img src="FnFreunion.jpg" alt="Reunion on Fox and Friends, 2016" style="width:100%; filter:grayscale(10%); border:1px solid rgba(201,168,76,0.15);">
         <p class="video-caption" style="margin-top:12px;">Twenty-two years later &nbsp;·&nbsp; Fox and Friends, Los Angeles &nbsp;·&nbsp; Linda Morelli, John Irish, Ron Cohan, Jim Bixby</p>
       </div>
     </div>
@@ -676,7 +689,7 @@
     var test = new Image();
     test.onload = function() { /* loaded fine — do nothing */ };
     test.onerror = function() { label(el, name); };
-    test.src = 'images/' + name;
+    test.src = '' + name;
   });
 })();
 </script>
