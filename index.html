@@ -871,6 +871,27 @@
     #books, #identification, #position-report { padding: 70px 6%; }
     footer { flex-direction: column; align-items: flex-start; }
     .visuals-strip { grid-template-columns: repeat(2, 1fr); }
+
+    /* Hero image — anchor left to keep wingtip visible */
+    .hero-bg { background-position: left center; }
+
+    /* Hero text — brighter and larger on mobile */
+    .hero-site-name {
+      font-size: clamp(2.8rem, 10vw, 4rem);
+      color: rgba(232, 228, 218, 0.96);
+    }
+    .vergence-line {
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      color: rgba(200, 220, 235, 0.78);
+    }
+    .hero-vergence-def p {
+      font-size: clamp(0.82rem, 2.8vw, 0.95rem);
+      color: rgba(200, 220, 235, 0.62);
+    }
+    .hero-vergence-coda {
+      font-size: clamp(0.82rem, 2.8vw, 0.95rem);
+      color: rgba(201, 168, 76, 0.68);
+    }
   }
 </style>
 </head>
