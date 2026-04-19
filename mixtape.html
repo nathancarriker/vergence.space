@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Mixtape | vergence.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Cardo:ital,wght@0,400;1,400&family=Ruthie&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:       #0a0a0f;
+    --steel:     #1c2230;
+    --mist:      #2e3d52;
+    --silver:    #8fa3b8;
+    --moonlight: #c8d8e8;
+    --gold:      #c9a84c;
+    --pale:      #e8e4dc;
+    --white:     #f5f2ed;
+    --accent:    #4a7fa5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--pale);
+    font-family: 'Times New Roman', Times, serif;
+    overflow-x: hidden;
+  }
+
+  /* ============================================
+     NAV
+  ============================================ */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(10,10,15,0.97);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  nav a {
+    color: rgba(143,163,184,0.75);
+    text-decoration: none;
+    font-family: 'Cardo', serif;
+    font-weight: 400;
+    font-size: 0.88rem;
+    letter-spacing: 0.08em;
+    padding: 6px 18px;
+    border-right: 1px solid rgba(143,163,184,0.15);
+    transition: color 0.3s ease;
+  }
+  nav a:last-child { border-right: none; }
+  nav a:hover { color: var(--gold); }
+
+  nav .dropdown { position: relative; display: inline-block; }
+  nav .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10,10,15,0.97);
+    border: 1px solid rgba(143,163,184,0.15);
+    border-top: 1px solid rgba(201,168,76,0.35);
+    min-width: 180px;
+    padding: 8px 0;
+  }
+  nav .dropdown:hover .dropdown-content { display: block; }
+  nav .dropdown-content a {
+    display: block;
+    border-right: none;
+    border-bottom: 1px solid rgba(143,163,184,0.1);
+    padding: 10px 20px;
+    font-size: 0.84rem;
+    letter-spacing: 0.06em;
+  }
+  nav .dropdown-content a:last-child { border-bottom: none; }
+
+  /* ============================================
+     HERO BANNER
+  ============================================ */
+  .page-hero {
+    min-height: 52vh;
+    display: flex;
+    align-items: flex-end;
+    padding: 120px 8% 72px;
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 40%, rgba(201,168,76,0.05) 0%, transparent 55%),
+      linear-gradient(to bottom, rgba(10,10,15,0) 0%, rgba(10,10,15,0.8) 100%);
+  }
+
+  .page-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 960px;
+    width: 100%;
+  }
+
+  .page-hero-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .page-hero-title {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(3.2rem, 7vw, 6rem);
+    color: rgba(230, 225, 215, 0.82);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .page-hero-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .page-hero-sub {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    color: rgba(143,163,184,0.7);
+    line-height: 1.6;
+    max-width: 620px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============================================
+     INTRO NOTE
+  ============================================ */
+  .intro-section {
+    background: var(--steel);
+    padding: 64px 8%;
+    position: relative;
+  }
+  .intro-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .intro-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(143,163,184,0.15), transparent);
+  }
+  .intro-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .intro-inner p {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    color: rgba(200,216,232,0.6);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+  .intro-inner p:last-child { margin-bottom: 0; }
+  .intro-inner em {
+    color: rgba(201,168,76,0.7);
+    font-style: normal;
+  }
+
+  /* ============================================
+     TRACKS
+  ============================================ */
+  #tracks {
+    padding: 80px 8% 100px;
+    background: var(--ink);
+  }
+
+  .tracks-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ============================================
+     TRACK BLOCK
+  ============================================ */
+  .track {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(143,163,184,0.08);
+    padding: 64px 0;
+    position: relative;
+  }
+
+  .track:first-child {
+    padding-top: 0;
+  }
+
+  .track:last-child {
+    border-bottom: none;
+  }
+
+  .track-number {
+    font-family: 'Cardo', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: rgba(201,168,76,0.35);
+    padding-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .track-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .track-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .track-title {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    color: rgba(230, 225, 215, 0.88);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+
+  .track-artist {
+    font-family: 'Cardo', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--silver);
+  }
+
+  /* YouTube embed */
+  .track-video {
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 16/9;
+    background: rgba(28,34,48,0.8);
+    border: 1px solid rgba(143,163,184,0.1);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .track-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Placeholder for essays not yet written */
+  .track-copy {
+    max-width: 560px;
+  }
+
+  .track-copy p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--moonlight);
+    margin-bottom: 16px;
+  }
+
+  .track-copy p:last-child { margin-bottom: 0; }
+
+  .track-copy em {
+    color: rgba(201,168,76,0.75);
+  }
+
+  .track-copy-placeholder {
+    max-width: 560px;
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: rgba(143,163,184,0.3);
+    line-height: 1.7;
+    border-left: 1px solid rgba(143,163,184,0.12);
+    padding-left: 16px;
+  }
+
+  /* Support note */
+  .support-note {
+    font-family: 'Cardo', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: rgba(143,163,184,0.3);
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  /* ============================================
+     SUPPORT FOOTER NOTE
+  ============================================ */
+  .mixtape-coda {
+    background: var(--steel);
+    padding: 48px 8%;
+    text-align: center;
+    position: relative;
+  }
+  .mixtape-coda::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(143,163,184,0.15), transparent);
+  }
+  .mixtape-coda p {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: rgba(143,163,184,0.4);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ============================================
+     FOOTER
+  ============================================ */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(143,163,184,0.1);
+    padding: 48px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .footer-wordmark {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: rgba(143,163,184,0.5);
+  }
+  .footer-copy {
+    font-family: 'Cardo', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: rgba(143,163,184,0.3);
+  }
+  .footer-links {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-family: 'Cardo', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(143,163,184,0.4);
+    text-decoration: none;
+    padding: 4px 16px;
+    border-right: 1px solid rgba(143,163,184,0.15);
+    transition: color 0.3s ease;
+  }
+  .footer-links a:last-child { border-right: none; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ============================================
+     RESPONSIVE
+  ============================================ */
+  @media (max-width: 640px) {
+    .track { grid-template-columns: 32px 1fr; padding: 40px 0; }
+    .track-video { max-width: 100%; }
+    .track-copy { max-width: 100%; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">My Hangar</a>
+  <a href="index.html#identification">Identification</a>
+  <div class="dropdown">
+    <a href="#">My Books ▾</a>
+    <div class="dropdown-content">
+      <a href="a-silver-ring.html">A Silver Ring</a>
+      <a href="a-shimmering-light.html">A Shimmering Light</a>
+    </div>
+  </div>
+  <a href="essays.html">My Essays</a>
+  <a href="index.html#visuals">Visuals</a>
+  <a href="mixtape.html">My Mixtape</a>
+  <a href="index.html#fpv-teaser">bLogbook</a>
+  <a href="index.html#position-report">Position Report</a>
+</nav>
+
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <p class="page-hero-label">Vergence.space · The Mixtape</p>
+    <h1 class="page-hero-title">The Mixtape</h1>
+    <div class="page-hero-rule"></div>
+    <p class="page-hero-sub">A song is an emotion, encoded. Language is the cipher.</p>
+  </div>
+</section>
+
+
+<!-- INTRO -->
+<div class="intro-section">
+  <div class="intro-inner">
+    <p>These either warned me, before anyone I knew even tried, <em>&#8220;someday, you&#8217;re going to feel this.&#8221;</em></p>
+    <p>Or just said, about things I&#8217;d already felt, <em>&#8220;we know&#8230;&#8221;</em></p>
+  </div>
+</div>
+
+
+<!-- TRACKS -->
+<section id="tracks">
+  <div class="tracks-inner">
+
+    <!-- 01 -->
+    <div class="track">
+      <div class="track-number">01</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Wildfire</div>
+          <div class="track-artist">Michael Martin Murphey</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/ufMmhL3sFL0" allowfullscreen loading="lazy" title="Wildfire – Michael Martin Murphey"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="track">
+      <div class="track-number">02</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Dreams</div>
+          <div class="track-artist">Fleetwood Mac</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/Y3ywicffOj4" allowfullscreen loading="lazy" title="Dreams – Fleetwood Mac"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="track">
+      <div class="track-number">03</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">The Wreck of the Edmund Fitzgerald</div>
+          <div class="track-artist">Gordon Lightfoot</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/9vST6hVRj2A" allowfullscreen loading="lazy" title="The Wreck of the Edmund Fitzgerald – Gordon Lightfoot"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="track">
+      <div class="track-number">04</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Riders on the Storm</div>
+          <div class="track-artist">The Doors</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/W1hn1pF-ilQ" allowfullscreen loading="lazy" title="Riders on the Storm – The Doors"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="track">
+      <div class="track-number">05</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">In the Air Tonight</div>
+          <div class="track-artist">Phil Collins</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/YkADj0TPrJA" allowfullscreen loading="lazy" title="In the Air Tonight – Phil Collins"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="track">
+      <div class="track-number">06</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Into the Night</div>
+          <div class="track-artist">Benny Mardones</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/iTRaRQQGOVY" allowfullscreen loading="lazy" title="Into the Night – Benny Mardones"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="track">
+      <div class="track-number">07</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Ghost Riders in the Sky</div>
+          <div class="track-artist">Johnny Cash</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/3LtmZM0OWO8" allowfullscreen loading="lazy" title="Ghost Riders in the Sky – Johnny Cash"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="track">
+      <div class="track-number">08</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Turn the Page</div>
+          <div class="track-artist">Bob Seger</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/GONmFCkCGCc" allowfullscreen loading="lazy" title="Turn the Page – Bob Seger"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="track">
+      <div class="track-number">09</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Blue on Black</div>
+          <div class="track-artist">Kenny Wayne Shepherd</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/TEqX5CWh7tY" allowfullscreen loading="lazy" title="Blue on Black – Kenny Wayne Shepherd"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="track">
+      <div class="track-number">10</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">She's a Beauty</div>
+          <div class="track-artist">The Tubes</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/mQ_k_VG6Syc" allowfullscreen loading="lazy" title="She's a Beauty – The Tubes"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="track">
+      <div class="track-number">11</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Saved My Life</div>
+          <div class="track-artist">Fee Waybill / The Tubes</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/3Sq-LyncW9M" allowfullscreen loading="lazy" title="Saved My Life – Fee Waybill"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="track">
+      <div class="track-number">12</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Children of Sanchez</div>
+          <div class="track-artist">Chuck Mangione</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/XxIsd1KZywQ" allowfullscreen loading="lazy" title="Children of Sanchez – Chuck Mangione"></iframe>
+        </div>
+        <div class="track-copy-placeholder">The first 60 seconds of the last 90 are musical ascension. Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="track">
+      <div class="track-number">13</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Feels So Good</div>
+          <div class="track-artist">Chuck Mangione</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/V_zWylXAW24" allowfullscreen loading="lazy" title="Feels So Good – Chuck Mangione"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="track">
+      <div class="track-number">14</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">B'bye</div>
+          <div class="track-artist">Dave Grusin</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/J3CjY106DWg" allowfullscreen loading="lazy" title="B'bye – Dave Grusin"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="track">
+      <div class="track-number">15</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Hill Where the Lord Hides</div>
+          <div class="track-artist">Chuck Mangione</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/5uSjTSdqlMw" allowfullscreen loading="lazy" title="Hill Where the Lord Hides – Chuck Mangione"></iframe>
+        </div>
+        <div class="track-copy-placeholder">The final minute sounds like what escape from a thunderstorm would fly like. Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 16 -->
+    <div class="track">
+      <div class="track-number">16</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Stranger than Fiction</div>
+          <div class="track-artist">Bad Company</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/wNk4Dw9LrUg" allowfullscreen loading="lazy" title="Stranger than Fiction – Bad Company"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 17 -->
+    <div class="track">
+      <div class="track-number">17</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Here Comes Trouble <span style="font-size:0.75em;color:var(--silver);font-style:normal;">(full album)</span></div>
+          <div class="track-artist">Bad Company</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/0Y7PIbV4pKk" allowfullscreen loading="lazy" title="Here Comes Trouble – Bad Company (full album)"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this album — coming.</div>
+        <div class="support-note">If this album moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 18 -->
+    <div class="track">
+      <div class="track-number">18</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Oh Well</div>
+          <div class="track-artist">Fleetwood Mac</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/l2F0dzfI85I" allowfullscreen loading="lazy" title="Oh Well – Fleetwood Mac"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 19 -->
+    <div class="track">
+      <div class="track-number">19</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Sara</div>
+          <div class="track-artist">Fleetwood Mac</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/9bWGy0K5VF0" allowfullscreen loading="lazy" title="Sara – Fleetwood Mac"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 20 -->
+    <div class="track">
+      <div class="track-number">20</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Rhiannon</div>
+          <div class="track-artist">Fleetwood Mac</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/jQAK6sVovUk" allowfullscreen loading="lazy" title="Rhiannon – Fleetwood Mac"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 21 -->
+    <div class="track">
+      <div class="track-number">21</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">If Anyone Falls</div>
+          <div class="track-artist">Stevie Nicks</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/eAQYpsN1tzA" allowfullscreen loading="lazy" title="If Anyone Falls – Stevie Nicks"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 22 -->
+    <div class="track">
+      <div class="track-number">22</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Déjà Vu</div>
+          <div class="track-artist">Crosby, Stills, Nash &amp; Young</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/YCs6Tpd5sFQ" allowfullscreen loading="lazy" title="Déjà Vu – CSNY"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 23 -->
+    <div class="track">
+      <div class="track-number">23</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">4+20</div>
+          <div class="track-artist">Stephen Stills</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/sYCRWKbcbUE" allowfullscreen loading="lazy" title="4+20 – Stephen Stills"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 24 -->
+    <div class="track">
+      <div class="track-number">24</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Southern Cross</div>
+          <div class="track-artist">Crosby, Stills &amp; Nash</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/chhJukhxeHE" allowfullscreen loading="lazy" title="Southern Cross – Crosby, Stills &amp; Nash"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 25 -->
+    <div class="track">
+      <div class="track-number">25</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Parachute</div>
+          <div class="track-artist">Cheryl Wheeler</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/F0Ga_nPZuiI" allowfullscreen loading="lazy" title="Parachute – Cheryl Wheeler"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 26 -->
+    <div class="track">
+      <div class="track-number">26</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Man in the Box</div>
+          <div class="track-artist">Alice in Chains</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/MpbYgrbys9o" allowfullscreen loading="lazy" title="Man in the Box – Alice in Chains"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 27 -->
+    <div class="track">
+      <div class="track-number">27</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Brandy (You're a Fine Girl)</div>
+          <div class="track-artist">Looking Glass</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/DVx8L7a3MuE" allowfullscreen loading="lazy" title="Brandy – Looking Glass"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 28 -->
+    <div class="track">
+      <div class="track-number">28</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Can't You See</div>
+          <div class="track-artist">Marshall Tucker Band</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/7Zpl94rbCx8" allowfullscreen loading="lazy" title="Can't You See – Marshall Tucker Band"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 29 -->
+    <div class="track">
+      <div class="track-number">29</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Learning to Fly</div>
+          <div class="track-artist">Pink Floyd</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/nVhNCTH8pDs" allowfullscreen loading="lazy" title="Learning to Fly – Pink Floyd"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 30 -->
+    <div class="track">
+      <div class="track-number">30</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Time</div>
+          <div class="track-artist">Pink Floyd</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/yl-Ms_ek-kE" allowfullscreen loading="lazy" title="Time – Pink Floyd"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 31 -->
+    <div class="track">
+      <div class="track-number">31</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Hey You</div>
+          <div class="track-artist">Pink Floyd</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/DEDjF2tLbhk" allowfullscreen loading="lazy" title="Hey You – Pink Floyd"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 32 -->
+    <div class="track">
+      <div class="track-number">32</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Imaginary Lovers</div>
+          <div class="track-artist">Atlanta Rhythm Section</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/nVQFHy6mM5A" allowfullscreen loading="lazy" title="Imaginary Lovers – Atlanta Rhythm Section"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 33 -->
+    <div class="track">
+      <div class="track-number">33</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Somebody's Baby</div>
+          <div class="track-artist">Jackson Browne</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/KMeQ3LxA30k" allowfullscreen loading="lazy" title="Somebody's Baby – Jackson Browne"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 34 -->
+    <div class="track">
+      <div class="track-number">34</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Running on Empty</div>
+          <div class="track-artist">Jackson Browne</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/AM0BYy7VLg8" allowfullscreen loading="lazy" title="Running on Empty – Jackson Browne"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 35 -->
+    <div class="track">
+      <div class="track-number">35</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Hotel California</div>
+          <div class="track-artist">Eagles</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/C63xOnGshNM" allowfullscreen loading="lazy" title="Hotel California – Eagles"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 36 -->
+    <div class="track">
+      <div class="track-number">36</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">The Load-Out / Stay</div>
+          <div class="track-artist">Jackson Browne</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/V4O-TWzGgU0" allowfullscreen loading="lazy" title="The Load-Out / Stay – Jackson Browne"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 37 -->
+    <div class="track">
+      <div class="track-number">37</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">Eye in the Sky</div>
+          <div class="track-artist">Alan Parsons Project</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/56hqrlQxMMI" allowfullscreen loading="lazy" title="Eye in the Sky – Alan Parsons Project"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 38 -->
+    <div class="track">
+      <div class="track-number">38</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">New Kid in Town</div>
+          <div class="track-artist">Eagles</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/_fW2rw8SwoA" allowfullscreen loading="lazy" title="New Kid in Town – Eagles"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 39 -->
+    <div class="track">
+      <div class="track-number">39</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">The Boxer</div>
+          <div class="track-artist">Simon &amp; Garfunkel</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/l3LFML_pxlY" allowfullscreen loading="lazy" title="The Boxer – Simon &amp; Garfunkel"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+    <!-- 40 -->
+    <div class="track">
+      <div class="track-number">40</div>
+      <div class="track-content">
+        <div class="track-header">
+          <div class="track-title">I Can&#8217;t Make You Love Me</div>
+          <div class="track-artist">Bonnie Raitt</div>
+        </div>
+        <div class="track-video">
+          <iframe src="https://www.youtube.com/embed/nW9Cu6GYqxo" allowfullscreen loading="lazy" title="I Can't Make You Love Me – Bonnie Raitt"></iframe>
+        </div>
+        <div class="track-copy-placeholder">Nathan's words on this song — coming.</div>
+        <div class="support-note">If this song moves you, find it and buy it. These artists earned it.</div>
+      </div>
+    </div>
+
+
+
+  </div>
+</section>
+
+
+<!-- CODA -->
+<div class="mixtape-coda">
+  <p>If a song moves you, find it and buy it. These artists earned it.</p>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="footer-wordmark">vergence.space</span>
+    <span class="footer-copy">© 2026 Nathan Carriker · Karcher Prince Publishing · All Rights Reserved</span>
+  </div>
+  <div class="footer-links">
+    <a href="index.html">My Hangar</a>
+    <a href="index.html#identification">Identification</a>
+    <a href="a-silver-ring.html">A Silver Ring</a>
+    <a href="a-shimmering-light.html">A Shimmering Light</a>
+    <a href="essays.html">My Essays</a>
+    <a href="index.html#visuals">Visuals</a>
+    <a href="mixtape.html">My Mixtape</a>
+    <a href="index.html#fpv-teaser">bLogbook</a>
+    <a href="index.html#position-report">Position Report</a>
+  </div>
+</footer>
+
+<!-- IMAGE FILENAME LABELER -->
+<script>
+(function() {
+  var LBL = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(28,34,48,0.92);color:rgba(201,168,76,0.75);font-family:Cardo,serif;font-size:0.62rem;letter-spacing:0.18em;text-align:center;padding:12px;pointer-events:none;z-index:10;';
+  function label(el, name) {
+    el.style.position = 'relative';
+    var d = document.createElement('div');
+    d.style.cssText = LBL;
+    d.textContent = name;
+    el.appendChild(d);
+  }
+  // img tags — label only on failure
+  document.querySelectorAll('img').forEach(function(img) {
+    function handle() {
+      if (img.naturalWidth === 0) {
+        var name = decodeURIComponent(img.src.split('/').pop());
+        img.style.opacity = '0';
+        label(img.parentNode, name);
+      }
+    }
+    if (img.complete) handle();
+    else { img.onload = handle; img.onerror = handle; }
+  });
+  // CSS background containers — test load before labeling
+  document.querySelectorAll('[data-img]').forEach(function(el) {
+    var name = el.getAttribute('data-img');
+    var test = new Image();
+    test.onload = function() { /* loaded fine — do nothing */ };
+    test.onerror = function() { label(el, name); };
+    test.src = 'images/' + name;
+  });
+})();
+</script>
+
+</body>
+</html>

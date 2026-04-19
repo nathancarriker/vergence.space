@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vergence.space | Nathan Carriker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Cardo:ital,wght@0,400;1,400&family=Ruthie&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:       #0a0a0f;
+    --steel:     #1c2230;
+    --mist:      #2e3d52;
+    --silver:    #8fa3b8;
+    --moonlight: #c8d8e8;
+    --gold:      #c9a84c;
+    --pale:      #e8e4dc;
+    --white:     #f5f2ed;
+    --accent:    #4a7fa5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--pale);
+    font-family: 'Times New Roman', Times, serif;
+    overflow-x: hidden;
+  }
+
+  /* ============================================
+     NAVIGATION
+  ============================================ */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.55) 0%, rgba(10,10,15,0) 100%);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0;
+  }
+
+  nav a {
+    color: rgba(143,163,184,0.65);
+    text-decoration: none;
+    font-family: 'Cardo', serif;
+    font-weight: 400;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    padding: 6px 18px;
+    border-right: 1px solid rgba(143,163,184,0.15);
+    transition: color 0.3s ease;
+  }
+  nav a:last-child { border-right: none; }
+  nav a:hover { color: var(--gold); }
+
+  nav .dropdown { position: relative; display: inline-block; }
+  nav .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10,10,15,0.97);
+    border: 1px solid rgba(143,163,184,0.15);
+    border-top: 1px solid var(--gold);
+    min-width: 180px;
+    padding: 8px 0;
+  }
+  nav .dropdown:hover .dropdown-content { display: block; }
+  nav .dropdown-content a {
+    display: block;
+    border-right: none;
+    border-bottom: 1px solid rgba(143,163,184,0.1);
+    padding: 10px 20px;
+    font-size: 0.84rem;
+    letter-spacing: 0.06em;
+  }
+  nav .dropdown-content a:last-child { border-bottom: none; }
+
+  /* ============================================
+     HERO
+  ============================================ */
+  #home {
+    position: relative;
+    height: 100vh;
+    min-height: 560px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('images/20200901_224503.jpg');
+    background-color: #050810;
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(0.88) saturate(0.80);
+    animation: distantLight 28s ease-in-out infinite;
+  }
+
+  @keyframes distantLight {
+    0%,  100% { opacity: 1; }
+    40%        { opacity: 0.965; }
+    41.5%      { opacity: 1.000; }
+    75%        { opacity: 0.972; }
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* Bottom fade only */
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,15,0.65) 0%, transparent 28%);
+    pointer-events: none;
+  }
+
+  /* Each text element absolutely placed — artfully scattered right side */
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* vergence.space — anchor, upper-right zone */
+  /* Site name — upper right, pulled inward */
+  .hero-site-name {
+    position: absolute;
+    top: 18%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(2.4rem, 4.6vw, 4.2rem);
+    font-weight: 400;
+    color: rgba(232, 228, 218, 0.82);
+    letter-spacing: 0.01em;
+    line-height: 1;
+    opacity: 0;
+    animation: fadeUp 2.4s ease 0.7s forwards;
+  }
+
+  /* Vergence definition — paired below site name, pulled inward */
+  .hero-vergence-def {
+    position: absolute;
+    top: 24%;
+    right: 13%;
+    max-width: 280px;
+    text-align: right;
+    opacity: 0;
+    transition: opacity 4s ease;
+    animation: fadeUp 1.5s ease 2.5s forwards;
+  }
+  .hero-vergence-def p {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(0.68rem, 1.1vw, 0.88rem);
+    font-weight: 400;
+    color: rgba(200, 220, 235, 0.38);
+    letter-spacing: 0.01em;
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+  .hero-vergence-coda {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(0.68rem, 1.1vw, 0.88rem);
+    color: rgba(201, 168, 76, 0.42);
+    letter-spacing: 0.01em;
+    line-height: 1.7;
+    display: block;
+    text-align: right;
+  }
+
+  /* Quote lines — grouped lower-left, move as one unit */
+  .vergence-line {
+    position: absolute;
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(0.78rem, 1.35vw, 1.05rem);
+    font-weight: 400;
+    color: rgba(200, 220, 235, 0.52);
+    letter-spacing: 0.01em;
+    line-height: 1.8;
+    opacity: 0;
+  }
+
+  .vergence-line-1 {
+    top: 63%;
+    right: 9%;
+    animation: fadeUp 2s ease 1.4s forwards;
+  }
+
+  .vergence-line-2 {
+    top: 71%;
+    right: 9%;
+    animation: fadeUp 2s ease 1.9s forwards;
+  }
+
+  .vergence-line-3 {
+    top: 79%;
+    right: 9%;
+    animation: fadeUp 2s ease 2.4s forwards;
+  }
+
+  /* Signature — removed */
+  .hero-signature { display: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-cta-group { display: none; }
+
+  /* Alt hero text — pull quote cycling group */
+  .hero-alt-content {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 4s ease;
+  }
+
+  .hero-alt-line-1 {
+    position: absolute;
+    top: 71%;
+    right: 9%;
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(0.78rem, 1.35vw, 1.05rem);
+    font-weight: 400;
+    color: rgba(200, 220, 235, 0.52);
+    letter-spacing: 0.01em;
+    line-height: 1.8;
+  }
+
+  .hero-alt-line-2 {
+    position: absolute;
+    top: 71%;
+    right: 9%;
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(0.78rem, 1.35vw, 1.05rem);
+    font-weight: 400;
+    color: rgba(200, 220, 235, 0.52);
+    letter-spacing: 0.01em;
+    line-height: 1.8;
+  }
+
+  .hero-primary-content {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 4s ease;
+  }
+
+  /* Scroll hint */
+  .scroll-hint {
+    position: absolute;
+    bottom: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 3.6s forwards;
+  }
+  .scroll-hint span {
+    font-family: 'Cardo', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(143,163,184,0.38);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, rgba(143,163,184,0.38), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    51%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ============================================
+     QUOTE SECTION
+  ============================================ */
+  #opening-quote {
+    padding: 80px 8%;
+    background: var(--ink);
+    position: relative;
+  }
+
+  .quote-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: right;
+  }
+
+  .quote-line {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(1.05rem, 2.0vw, 1.4rem);
+    font-weight: 400;
+    color: rgba(200, 216, 232, 0.55);
+    line-height: 1.75;
+    display: block;
+  }
+
+  /* ============================================
+     SECTION DIVIDERS
+  ============================================ */
+  .section-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 20px;
+  }
+  .section-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Cardo', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    letter-spacing: 0.04em;
+    color: rgba(210, 205, 195, 0.72);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  /* ============================================
+     BOOKS / THE WORKS
+  ============================================ */
+  #books {
+    padding: 100px 8%;
+    background: var(--steel);
+    position: relative;
+  }
+  #books::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .books-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 960px;
+    margin: 60px auto 0;
+  }
+  .book-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 40px;
+    border: 1px solid rgba(143,163,184,0.12);
+    background: rgba(10,10,15,0.4);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    position: relative;
+  }
+  .book-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.4s ease;
+  }
+  .book-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+  .book-card:hover::before { height: 100%; }
+  .book-cover {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--mist);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .book-cover img { width: 100%; height: 100%; object-fit: cover; }
+  .book-title {
+    font-family: 'Cardo', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    line-height: 1.1;
+  }
+  .book-meta {
+    font-family: 'Cardo', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--silver);
+  }
+  .book-description {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--moonlight);
+    font-style: italic;
+  }
+  .book-tagline {
+    font-family: 'Cardo', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: var(--silver);
+    border-left: 2px solid var(--gold);
+    padding-left: 14px;
+  }
+  .coming-soon-badge {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 4px 12px;
+    align-self: flex-start;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    font-family: 'Cardo', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 12px 28px;
+    transition: all 0.3s ease;
+  }
+  .btn-primary:hover { background: transparent; color: var(--gold); }
+
+  .btn-secondary {
+    display: inline-block;
+    font-family: 'Cardo', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--silver);
+    background: transparent;
+    border: 1px solid rgba(143,163,184,0.35);
+    padding: 12px 28px;
+    transition: all 0.3s ease;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ============================================
+     FLIGHT PATH VECTOR TEASER
+  ============================================ */
+  #fpv-teaser {
+    padding: 80px 8%;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  #fpv-teaser::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(74,127,165,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,127,165,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .fpv-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .fpv-title {
+    font-family: 'Cardo', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    text-shadow: 0 0 30px rgba(74,127,165,0.4);
+  }
+  .fpv-subtitle {
+    font-family: 'Cardo', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--silver);
+    margin-bottom: 40px;
+  }
+  .countdown-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+  }
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 72px;
+  }
+  .countdown-number {
+    font-family: 'Cardo', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--accent);
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(74,127,165,0.5);
+    border: 1px solid rgba(74,127,165,0.2);
+    padding: 12px 16px;
+    background: rgba(74,127,165,0.05);
+    min-width: 80px;
+    text-align: center;
+  }
+  .countdown-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(143,163,184,0.6);
+  }
+  .countdown-colon {
+    font-family: 'Cardo', serif;
+    font-size: 2.4rem;
+    color: rgba(74,127,165,0.4);
+    line-height: 1;
+    padding-top: 12px;
+    align-self: flex-start;
+  }
+  .fpv-note {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--silver);
+    margin-top: 16px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  /* ============================================
+     IDENTIFICATION (About)
+  ============================================ */
+  #identification {
+    padding: 100px 8%;
+    background: var(--steel);
+    position: relative;
+  }
+  #identification::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.5), transparent);
+  }
+  .id-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 80px;
+    max-width: 960px;
+    margin: 60px auto 0;
+    align-items: start;
+  }
+  .id-photo { position: relative; }
+  .id-photo-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--mist);
+    overflow: hidden;
+    position: relative;
+  }
+  .id-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: sepia(20%) contrast(110%) brightness(0.9);
+  }
+  .id-photo-frame::before, .id-photo-frame::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+  }
+  .id-photo-frame::before {
+    top: -1px; left: -1px;
+    border-top: 2px solid var(--gold);
+    border-left: 2px solid var(--gold);
+  }
+  .id-photo-frame::after {
+    bottom: -1px; right: -1px;
+    border-bottom: 2px solid var(--gold);
+    border-right: 2px solid var(--gold);
+  }
+  .id-callsign {
+    font-family: 'Cardo', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 16px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .id-callsign span { color: rgba(143,163,184,0.6); font-size: 0.6rem; display: block; }
+  .id-text h2 {
+    font-family: 'Cardo', serif;
+    font-size: 3rem;
+    color: rgba(210, 205, 195, 0.72);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .id-text p {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--moonlight);
+    margin-bottom: 20px;
+  }
+  .id-text p.lead {
+    font-size: 1.1rem;
+    color: rgba(210, 205, 195, 0.8);
+    font-style: italic;
+  }
+  .id-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(143,163,184,0.15);
+  }
+  .id-stat-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--silver);
+    margin-bottom: 4px;
+  }
+  .id-stat-value {
+    font-family: 'Cardo', serif;
+    font-size: 0.9rem;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+  }
+
+  /* ============================================
+     VISUALS STRIP
+  ============================================ */
+  #visuals {
+    padding: 80px 0;
+    background: var(--ink);
+    overflow: hidden;
+  }
+  .visuals-header { padding: 0 8%; margin-bottom: 48px; }
+  .visuals-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 0 8%;
+  }
+  .visual-thumb {
+    width: 100%;
+    height: 180px;
+    background: var(--mist);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .visual-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(70%) brightness(0.8);
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+  .visual-thumb:hover img { filter: saturate(100%) brightness(1); transform: scale(1.04); }
+  .visual-thumb-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(10,10,15,0.85));
+    padding: 20px 12px 10px;
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--silver);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .visual-thumb:hover .visual-thumb-label { opacity: 1; }
+
+  /* ============================================
+     POSITION REPORT (Contact)
+  ============================================ */
+  #position-report {
+    padding: 100px 8%;
+    background: var(--steel);
+    position: relative;
+  }
+  #position-report::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 860px;
+    margin: 60px auto 0;
+  }
+  .contact-info h3 {
+    font-family: 'Cardo', serif;
+    font-size: 2.4rem;
+    color: rgba(210, 205, 195, 0.72);
+    margin-bottom: 20px;
+  }
+  .contact-info p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--moonlight);
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+  .contact-detail { display: flex; flex-direction: column; gap: 12px; }
+  .contact-detail-item { display: flex; gap: 16px; align-items: flex-start; }
+  .contact-detail-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    min-width: 80px;
+    padding-top: 2px;
+  }
+  .contact-detail-value {
+    font-family: 'Cardo', serif;
+    font-size: 0.82rem;
+    color: var(--silver);
+    letter-spacing: 0.04em;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .contact-form input, .contact-form textarea {
+    background: rgba(10,10,15,0.5);
+    border: 1px solid rgba(143,163,184,0.15);
+    border-bottom: 1px solid rgba(143,163,184,0.35);
+    color: var(--pale);
+    font-family: 'Cardo', serif;
+    font-size: 0.85rem;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    letter-spacing: 0.05em;
+  }
+  .contact-form input::placeholder, .contact-form textarea::placeholder {
+    color: rgba(143,163,184,0.4);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .contact-form input:focus, .contact-form textarea:focus {
+    border-color: rgba(201,168,76,0.5);
+  }
+  .contact-form textarea { height: 140px; resize: vertical; }
+  .contact-form button {
+    font-family: 'Cardo', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 14px 32px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: all 0.3s ease;
+  }
+  .contact-form button:hover { background: transparent; color: var(--gold); }
+
+  /* ============================================
+     FOOTER
+  ============================================ */
+  footer {
+    padding: 40px 8%;
+    background: var(--ink);
+    border-top: 1px solid rgba(143,163,184,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-brand { display: flex; flex-direction: column; gap: 4px; }
+  .footer-wordmark {
+    font-family: 'Cardo', serif;
+    font-size: 1.1rem;
+    color: var(--silver);
+    opacity: 0.65;
+    letter-spacing: 0.06em;
+  }
+  .footer-copy {
+    font-family: 'Cardo', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(143,163,184,0.4);
+  }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(143,163,184,0.4);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ============================================
+     RESPONSIVE
+  ============================================ */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    nav a { font-size: 0.68rem; padding: 4px 10px; }
+    .hero-content { padding: 0 6%; }
+    .books-grid { grid-template-columns: 1fr; gap: 40px; }
+    .id-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    #books, #identification, #position-report { padding: 70px 6%; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .visuals-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ==============================
+     NAVIGATION
+============================== -->
+<nav>
+  <a href="#home">My Hangar</a>
+  <a href="#identification">Identification</a>
+  <div class="dropdown">
+    <a href="#books">My Books ▾</a>
+    <div class="dropdown-content">
+      <a href="a-silver-ring.html">A Silver Ring</a>
+      <a href="a-shimmering-light.html">A Shimmering Light</a>
+    </div>
+  </div>
+  <a href="essays.html">My Essays</a>
+  <a href="#visuals">Visuals</a>
+  <a href="mixtape.html">My Mixtape</a>
+  <a href="#fpv-teaser">bLogbook</a>
+  <a href="#position-report">Position Report</a>
+</nav>
+
+
+<!-- ==============================
+     HERO
+============================== -->
+<section id="home">
+  <div class="hero-bg" data-img="20200901_224503.jpg"></div>
+  <div class="hero-vignette"></div>
+
+  <!-- Constant: site name always visible -->
+  <div class="hero-content">
+    <span class="hero-site-name">vergence.space</span>
+  </div>
+
+  <!-- Vergence definition cycle — independent timer -->
+  <div class="hero-vergence-def" id="hero-def-1">
+    <p id="hero-def-text" style="opacity:1;">Where two perspectives resolve into an accurate measure of distance &#8212; or depth.</p>
+    <span class="hero-vergence-coda" id="hero-def-coda" style="opacity:0;position:absolute;top:3.4em;left:0;right:0;">If you&#8217;re here, we&#8217;re halfway there.</span>
+  </div>
+
+  <!-- Reveal 1 -->
+  <div class="hero-alt-content hero-reveal" id="hero-reveal-1" style="opacity:1;">
+    <span class="vergence-line vergence-line-1">As Reality&#8217;s simple children sleep,</span>
+    <span class="vergence-line vergence-line-2">the true terrors of Existence roam rampant,</span>
+    <span class="vergence-line vergence-line-3">with Liberty.</span>
+  </div>
+
+  <!-- Reveal 2 -->
+  <div class="hero-alt-content hero-reveal" id="hero-reveal-2" style="opacity:0;">
+    <span class="vergence-line vergence-line-1">but the noise is hushed by urgent Purpose.</span>
+    <span class="vergence-line vergence-line-2">The slipstream.</span>
+  </div>
+
+  <!-- Reveal 3 -->
+  <div class="hero-alt-content hero-reveal" id="hero-reveal-3" style="opacity:0;">
+    <span class="vergence-line vergence-line-1">Altitude is Perspective.</span>
+    <span class="vergence-line vergence-line-2">The Energy, relief.</span>
+  </div>
+
+  <div class="scroll-hint">
+    <span>further</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+
+
+
+
+<!-- ==============================
+     IDENTIFICATION (About)
+============================== -->
+<section id="identification">
+  <p class="section-label">Identification</p>
+  <div class="section-rule"></div>
+  <h2 class="section-title">Identification</h2>
+
+  <div class="id-grid">
+
+    <div class="id-photo">
+      <div class="id-photo-frame">
+        <img src="images/IMG_4397.jpg" alt="Nathan Carriker" style="object-position: left center;">
+      </div>
+
+    </div>
+
+    <div class="id-text" style="font-family:'Cormorant',serif;font-style:normal;font-size:clamp(1rem,1.6vw,1.2rem);line-height:1.85;color:var(--moonlight);">
+      <p>
+        In 1944, this night was Uncle Rudy&#8217;s last. He&#8217;d have been asleep at Hardwick by now (or maybe not) but here I am, walking &#8211; yes, <em>walking</em> &#8211; the half-mile back to my hotel in the shadow of the Eiffel tower. On climbout tomorrow, I&#8217;ll nearly have a line of sight to where his plane was shot from the sky, eighty-two years ago.
+      </p>
+      <p>
+        My obsession, my drive to become a pilot overcame me early, seemingly from his ghost. But the poison of bullying also hit me early, and stayed. I barely remember any mirth of boyhood.
+      </p>
+      <p>
+        It all grew into, and became part of me. As with any toxin, I found a way to live with the poison. Flying has been the way &#8211; until the last piece stops moving.
+      </p>
+      <p>
+        But I watch them in the airports. I watch them on the sidewalks. People &#8211; nearly always in groups, with just the occasional lone straggler like me. Straggling like me, but not <em>like</em> me.
+      </p>
+      <p style="margin-top:-12px;">
+        Not one like me.
+      </p>
+      <p>
+        Flying&#8217;s almost killed me a few times, but it saves me every day. It&#8217;s all I&#8217;ve had at times, and once, for one long year, I didn&#8217;t even have that.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==============================
+     THE WORKS / BOOKS
+============================== -->
+<section id="books">
+  <p class="section-label">Karcher Prince Publishing</p>
+  <div class="section-rule"></div>
+  <h2 class="section-title">Books</h2>
+
+  <div class="books-grid">
+
+    <!-- A SILVER RING -->
+    <div class="book-card">
+      <div class="book-cover" data-img="asr_front_cover.jpg" style="
+        background-image: url('images/asr_front_cover.jpg');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+      "></div>
+      <div>
+        <p class="book-meta" style="margin-bottom:8px;">Literary Fiction</p>
+        <h3 class="book-title" style="font-size:1.6rem; margin-bottom:12px;">A Silver Ring</h3>
+        <p class="book-tagline" style="margin-bottom:14px;">Every soul has a Mission — but every life has its Fate.</p>
+        <p class="book-description">
+          Two families estranged by war discover their legacy and the secrets that bind them forever. A sweeping story weaving the desperation of air combat over Europe with the life of a modern regional airline pilot, to trace what heredity couldn't let time forget.
+        </p>
+      </div>
+      <a href="a-silver-ring.html" class="btn-primary" style="margin-top:auto;">Read More</a>
+    </div>
+
+    <!-- A SHIMMERING LIGHT -->
+    <div class="book-card">
+      <div class="book-cover" data-img="1774734926378_yankee.jpg" style="
+        background-image: url('images/1774734926378_yankee.jpg');
+        background-size: cover;
+        background-position: center 40%;
+        background-repeat: no-repeat;
+        background-color: #0a0f1a;
+      "></div>
+      <div>
+        <span class="coming-soon-badge">Forthcoming</span>
+        <h3 class="book-title" style="font-size:1.6rem; margin-bottom:12px; margin-top:14px;">A Shimmering Light</h3>
+        <p class="book-tagline" style="margin-bottom:14px;">Literary Nonfiction</p>
+        <p class="book-description">
+          In December, 1994, doctors said I'd never walk again, let alone fly. They were wrong. A memoir of survival and recovery — from much more than a physical injury.
+        </p>
+      </div>
+      <a href="a-shimmering-light.html" class="btn-secondary" style="margin-top:auto;">Preview</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==============================
+     VISUALS (Photography)
+============================== -->
+<section id="visuals">
+  <div class="visuals-header">
+    <p class="section-label">Photography & Imagery</p>
+    <div class="section-rule" style="margin:0 0 20px;"></div>
+    <h2 class="section-title" style="text-align:left;">Visuals</h2>
+  </div>
+
+  <div class="visuals-strip">
+    <div class="visual-thumb">
+      <img src="images/Cumulus_Moonrise.jpg" alt="Cumulus Moonrise" onerror="this.style.display='none'">
+      <div class="visual-thumb-label">Cumulus Moonrise</div>
+    </div>
+    <div class="visual-thumb">
+      <img src="images/LPB_Sunrise.JPG" alt="La Paz Sunrise" onerror="this.style.display='none'">
+      <div class="visual-thumb-label">La Paz · Sunrise</div>
+    </div>
+    <div class="visual-thumb">
+      <img src="images/-80_sunrise.jpg" alt="Sierra Foothills Tule Fog" onerror="this.style.display='none'">
+      <div class="visual-thumb-label">Sierra Foothills · Tule Fog</div>
+    </div>
+    <div class="visual-thumb">
+      <img src="images/windsock-1008x538.jpg" alt="Twilight Windsock" onerror="this.style.display='none'">
+      <div class="visual-thumb-label">Twilight Windsock</div>
+    </div>
+    <div class="visual-thumb">
+      <img src="images/IMG_2953.JPEG" alt="Canyon Country" onerror="this.style.display='none'">
+      <div class="visual-thumb-label">Canyon Country</div>
+    </div>
+    <div class="visual-thumb">
+      <img src="images/20150912_154213.jpg" alt="The Blues" onerror="this.style.display='none'">
+      <div class="visual-thumb-label">The Blues</div>
+    </div>
+    <div class="visual-thumb">
+      <img src="images/METRO.jpg" alt="Air Midwest Metroliner II" onerror="this.style.display='none'">
+      <div class="visual-thumb-label">Air Midwest · Metroliner II</div>
+    </div>
+    <div class="visual-thumb">
+      <img src="images/IMG_2882.jpg" alt="Shiprock NM" onerror="this.style.display='none'">
+      <div class="visual-thumb-label">Shiprock, NM</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==============================
+     FLIGHT PATH VECTOR TEASER
+============================== -->
+<section id="fpv-teaser">
+  <div class="fpv-inner">
+    <p class="section-label">bLogbook</p>
+    <h2 class="fpv-title">Flight Path Vector</h2>
+    <p class="fpv-subtitle">A Major Airline Captain's Log · Coming 2034</p>
+
+    <p style="font-family:'Times New Roman',Times,serif;font-style:italic;font-size:0.95rem;color:var(--silver);line-height:1.8;margin-bottom:8px;">
+      The stories I can't tell until retirement. 26 years in the right seat — flying Metroliners (II's and III's), Beech 1900C's, Brasilias, the DC-9, and every jet Boeing made but the Whale — then 7 years as a 737 captain, ending with a decade in the left seat of the 777. Everything I've seen, thought, and learned in a career that was anything but a given. Launching at retirement — Winter Solstice, 2034. Until then —
+    </p>
+
+    <div class="countdown-wrapper" id="countdown">
+      <div class="countdown-unit">
+        <div class="countdown-number" id="cd-years">—</div>
+        <div class="countdown-label">Years</div>
+      </div>
+      <div class="countdown-colon">:</div>
+      <div class="countdown-unit">
+        <div class="countdown-number" id="cd-days">—</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-colon">:</div>
+      <div class="countdown-unit">
+        <div class="countdown-number" id="cd-hours">—</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-colon">:</div>
+      <div class="countdown-unit">
+        <div class="countdown-number" id="cd-minutes">—</div>
+        <div class="countdown-label">Min</div>
+      </div>
+      <div class="countdown-colon">:</div>
+      <div class="countdown-unit">
+        <div class="countdown-number" id="cd-seconds">—</div>
+        <div class="countdown-label">Sec</div>
+      </div>
+    </div>
+
+    <p class="fpv-note">
+      December 21, 2034 · Winter Solstice · Mandatory retirement age 65 ·
+      <em>flightpathvector.com</em>
+    </p>
+  </div>
+</section>
+
+
+<!-- ==============================
+     POSITION REPORT (Contact)
+============================== -->
+<section id="position-report">
+  <p class="section-label">Get in Touch</p>
+  <div class="section-rule"></div>
+  <h2 class="section-title">Position Report</h2>
+
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p>
+        For speaking inquiries, book orders, media requests, or a general hail on ship-to-ship —
+      </p>
+      <div class="contact-detail">
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Books</span>
+          <span class="contact-detail-value">karcherprince.com</span>
+        </div>
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Novel</span>
+          <span class="contact-detail-value">asilverring.com</span>
+        </div>
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Memoir</span>
+          <span class="contact-detail-value">ashimmeringlight.com</span>
+        </div>
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Blog</span>
+          <span class="contact-detail-value">flightpathvector.com</span>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form" action="https://formspree.io/f/mbdqyypg" method="POST">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="text" name="subject" placeholder="Subject">
+      <textarea name="message" placeholder="Message" required></textarea>
+      <button type="submit">Transmit</button>
+    </form>
+  </div>
+</section>
+
+
+<!-- ==============================
+     FOOTER
+============================== -->
+<footer>
+  <div class="footer-brand">
+    <span class="footer-wordmark">vergence.space</span>
+    <span class="footer-copy">© 2026 Nathan Carriker · Karcher Prince Publishing · All Rights Reserved</span>
+  </div>
+
+  <div class="footer-links">
+    <a href="#home">My Hangar</a>
+    <a href="#identification">Identification</a>
+    <a href="a-silver-ring.html">A Silver Ring</a>
+    <a href="a-shimmering-light.html">A Shimmering Light</a>
+    <a href="essays.html">My Essays</a>
+    <a href="#visuals">Visuals</a>
+    <a href="mixtape.html">My Mixtape</a>
+    <a href="#fpv-teaser">bLogbook</a>
+    <a href="#position-report">Position Report</a>
+  </div>
+</footer>
+
+
+<!-- ==============================
+     SCRIPTS
+============================== -->
+<script>
+  function updateCountdown() {
+    const target = new Date('December 21, 2034 00:00:00').getTime();
+    const now    = new Date().getTime();
+    const diff   = target - now;
+
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML =
+        '<p style="font-family:\'Special Elite\',serif;color:var(--gold);font-size:1.2rem;letter-spacing:0.1em;">ENGINES SHUT DOWN · LOGBOOK OPEN</p>';
+      return;
+    }
+
+    const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+    const days  = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById('cd-years').textContent   = String(years).padStart(2, '0');
+    document.getElementById('cd-days').textContent    = String(days).padStart(3, '0');
+    document.getElementById('cd-hours').textContent   = String(hours).padStart(2, '0');
+    document.getElementById('cd-minutes').textContent = String(mins).padStart(2, '0');
+    document.getElementById('cd-seconds').textContent = String(secs).padStart(2, '0');
+  }
+
+  // Quote cycling — three reveals, 9s period
+  (function() {
+    const reveals = [
+      document.getElementById('hero-reveal-1'),
+      document.getElementById('hero-reveal-2'),
+      document.getElementById('hero-reveal-3')
+    ];
+    const HOLD = 5000;
+    const FADE = 4000;
+    let current = 0;
+
+    setTimeout(function cycle() {
+      const next = (current + 1) % reveals.length;
+      reveals[current].style.opacity = '0';
+      reveals[next].style.opacity = '1';
+      current = next;
+      setTimeout(cycle, HOLD + FADE);
+    }, 4000 + HOLD);
+  })();
+
+  // Vergence definition cycling — definition and coda swap in same position
+  (function() {
+    const defP = document.getElementById('hero-def-text');
+    const coda = document.getElementById('hero-def-coda');
+    if (!defP || !coda) return;
+
+    const HOLD = 3500;
+    const FADE = 2000;
+
+    defP.style.transition = 'opacity ' + (FADE/1000) + 's ease';
+    coda.style.transition = 'opacity ' + (FADE/1000) + 's ease';
+
+    function showCoda() {
+      defP.style.opacity = '0';
+      setTimeout(function() {
+        coda.style.opacity = '1';
+        setTimeout(showDef, HOLD);
+      }, FADE);
+    }
+    function showDef() {
+      coda.style.opacity = '0';
+      setTimeout(function() {
+        defP.style.opacity = '1';
+        setTimeout(showCoda, HOLD);
+      }, FADE);
+    }
+
+    // Start cycle after definition has faded in (2.5s delay + 1.5s fade = 4s)
+    setTimeout(function() {
+      defP.style.opacity = '1';
+      setTimeout(showCoda, HOLD);
+    }, 4000);
+  })();
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  window.addEventListener('scroll', function() {
+    const scrolled = window.scrollY;
+    const heroBg   = document.querySelector('.hero-bg');
+    if (heroBg) heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+  });
+</script>
+
+<!-- IMAGE FILENAME LABELER -->
+<script>
+(function() {
+  var LBL = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(28,34,48,0.92);color:rgba(201,168,76,0.75);font-family:Cardo,serif;font-size:0.62rem;letter-spacing:0.18em;text-align:center;padding:12px;pointer-events:none;z-index:10;';
+  function label(el, name) {
+    el.style.position = 'relative';
+    var d = document.createElement('div');
+    d.style.cssText = LBL;
+    d.textContent = name;
+    el.appendChild(d);
+  }
+  // img tags — label only on failure
+  document.querySelectorAll('img').forEach(function(img) {
+    function handle() {
+      if (img.naturalWidth === 0) {
+        var name = decodeURIComponent(img.src.split('/').pop());
+        img.style.opacity = '0';
+        label(img.parentNode, name);
+      }
+    }
+    if (img.complete) handle();
+    else { img.onload = handle; img.onerror = handle; }
+  });
+  // CSS background containers — test load before labeling
+  document.querySelectorAll('[data-img]').forEach(function(el) {
+    var name = el.getAttribute('data-img');
+    var test = new Image();
+    test.onload = function() { /* loaded fine — do nothing */ };
+    test.onerror = function() { label(el, name); };
+    test.src = 'images/' + name;
+  });
+})();
+</script>
+
+</body>
+</html>

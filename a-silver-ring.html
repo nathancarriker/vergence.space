@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Silver Ring | vergence.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Cardo:ital,wght@0,400;1,400&family=Ruthie&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:       #08090e;
+    --steel:     #1a2432;
+    --mist:      #2a3d52;
+    --silver:    #a0b5cc;  /* Cooler, icier silver */
+    --moonlight: #d5e5f5;  /* Much cooler moonlight */
+    --gold:      #9db4c8;  /* Cool steel blue instead of gold */
+    --pale:      #e8ecf0;
+    --white:     #f0f4f8;
+    --accent:    #5a8fb5;  /* Cooler accent */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--pale);
+    font-family: 'Times New Roman', Times, serif;
+    overflow-x: hidden;
+  }
+
+  /* ============================================
+     NAV
+  ============================================ */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(10,10,15,0.97);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  nav a {
+    color: rgba(143,163,184,0.75);
+    text-decoration: none;
+    font-family: 'Cardo', serif;
+    font-weight: 400;
+    font-size: 0.88rem;
+    letter-spacing: 0.08em;
+    padding: 6px 18px;
+    border-right: 1px solid rgba(143,163,184,0.15);
+    transition: color 0.3s ease;
+  }
+
+  nav a:last-child { border-right: none; }
+  nav a:hover { color: var(--gold); }
+
+  nav .dropdown { position: relative; display: inline-block; }
+
+  nav .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10,10,15,0.97);
+    border: 1px solid rgba(143,163,184,0.15);
+    border-top: 1px solid rgba(201,168,76,0.35);
+    min-width: 180px;
+    padding: 8px 0;
+  }
+
+  nav .dropdown:hover .dropdown-content { display: block; }
+
+  nav .dropdown-content a {
+    display: block;
+    border-right: none;
+    border-bottom: 1px solid rgba(143,163,184,0.1);
+    padding: 10px 20px;
+    font-size: 0.84rem;
+    letter-spacing: 0.06em;
+  }
+
+  nav .dropdown-content a:last-child { border-bottom: none; }
+
+  /* ============================================
+     HERO BANNER
+  ============================================ */
+  .book-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 8% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .book-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(28,34,48,0.6) 0%, transparent 60%),
+      linear-gradient(to right, rgba(10,10,15,0.95) 35%, rgba(10,10,15,0.4) 100%);
+    z-index: 1;
+  }
+
+  /* Subtle smoke/cloud texture */
+  .book-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('images/lib.JPG');
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.30;
+    z-index: 0;
+  }
+
+  .book-hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  /* ============================================
+     COVER
+  ============================================ */
+  .cover-wrap {
+    flex-shrink: 0;
+    width: 260px;
+  }
+
+  .cover-img {
+    width: 260px;
+    height: 390px;
+    background-image: url('images/asr_front_cover.jpg');
+    background-size: cover;
+    background-position: center center;
+    box-shadow:
+      -8px 8px 0 rgba(0,0,0,0.6),
+      -4px 4px 30px rgba(0,0,0,0.8),
+      0 0 60px rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .cover-isbn {
+    font-family: 'Cardo', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: rgba(143,163,184,0.4);
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  /* ============================================
+     BOOK META & TAGLINE
+  ============================================ */
+  .book-meta-block {
+    max-width: 580px;
+  }
+
+  .book-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .book-title-main {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    color: rgba(230, 225, 215, 0.82);
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .book-author-line {
+    font-family: 'Ruthie', cursive;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    color: var(--silver);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .book-genre-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .genre-tag {
+    font-family: 'Cardo', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(143,163,184,0.6);
+    border: 1px solid rgba(143,163,184,0.2);
+    padding: 4px 12px;
+  }
+
+  .book-hook {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--moonlight);
+    line-height: 1.6;
+    margin-bottom: 36px;
+    border-left: 2px solid var(--gold);
+    padding-left: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .buy-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .btn-buy {
+    font-family: 'Cardo', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 13px 32px;
+    border: 1px solid var(--gold);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-buy:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .btn-secondary {
+    font-family: 'Cardo', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--silver);
+    background: transparent;
+    padding: 13px 32px;
+    border: 1px solid rgba(143,163,184,0.35);
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--silver);
+    color: var(--white);
+  }
+
+  .buy-note {
+    font-size: 0.75rem;
+    color: rgba(143,163,184,0.4);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* ============================================
+     BACK COVER COPY
+  ============================================ */
+  .synopsis-section {
+    background: linear-gradient(to bottom, var(--ink) 0%, var(--steel) 30%, var(--steel) 70%, var(--ink) 100%);
+    padding: 100px 8%;
+    position: relative;
+  }
+
+  .synopsis-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  
+  /* The Ring background */
+  .synopsis-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('images/the_ring.jpg');
+    background-size: 400px auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0.20;
+    z-index: 0;
+  }
+
+  .synopsis-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-eyebrow {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .synopsis-tagline {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    color: rgba(210,205,195,0.72);
+    line-height: 1.3;
+    margin-bottom: 48px;
+    font-style: italic;
+  }
+
+  .synopsis-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 48px;
+  }
+
+  .synopsis-body p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--moonlight);
+    margin-bottom: 28px;
+  }
+
+  .synopsis-body p:last-child { margin-bottom: 0; }
+
+  /* ============================================
+     MY INSPIRATION
+  ============================================ */
+  .inspiration-section {
+    background: var(--ink);
+    padding: 100px 8%;
+    position: relative;
+  }
+
+  .inspiration-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(143,163,184,0.2), transparent);
+  }
+  
+  /* Uncle Rudy portrait background */
+  .inspiration-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('images/Uncle_Rudy.jpg');
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.12;
+    z-index: 0;
+  }
+
+  .inspiration-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .inspiration-content p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--moonlight);
+    margin-bottom: 24px;
+  }
+
+  .inspiration-quote {
+    font-family: 'Cardo', serif;
+    font-size: 1.15rem;
+    color: rgba(210,205,195,0.7);
+    font-style: italic;
+    line-height: 1.6;
+    border-left: 3px solid var(--gold);
+    padding: 24px 28px;
+    margin: 40px 0;
+    background: rgba(201,168,76,0.04);
+  }
+
+  /* ============================================
+     READER REVIEWS
+  ============================================ */
+  /* ============================================
+     HISTORICAL NOTE
+  ============================================ */
+  .history-section {
+    background: linear-gradient(to bottom, var(--ink) 0%, var(--steel) 30%, var(--steel) 70%, var(--ink) 100%);
+    padding: 100px 8%;
+    position: relative;
+  }
+
+  .history-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  
+  /* Ploesti raid background */
+  .history-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('images/Ploesti_B-24.jpg');
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.08;
+    z-index: 0;
+  }
+
+  .history-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .history-content p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--moonlight);
+    margin-bottom: 24px;
+  }
+
+  .history-content a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    transition: all 0.3s ease;
+  }
+
+  .history-content a:hover {
+    color: var(--moonlight);
+    border-bottom-color: var(--moonlight);
+  }
+
+  /* ============================================
+     MEET THE CHARACTERS
+  ============================================ */
+  .characters-section {
+    background: var(--ink);
+    padding: 100px 8%;
+    position: relative;
+  }
+
+  .characters-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(143,163,184,0.2), transparent);
+  }
+
+  /* Carriker family photo background */
+  .characters-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('images/Jack_Carriker_Clan_c_1941.jpg');
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.08;
+    z-index: 0;
+  }
+
+  .characters-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .character-card {
+    background: rgba(42,61,82,0.25);
+    padding: 30px;
+    margin-bottom: 30px;
+    border-left: 3px solid var(--gold);
+    transition: all 0.3s ease;
+  }
+
+  .character-card:hover {
+    background: rgba(42,61,82,0.35);
+    border-left-color: var(--moonlight);
+  }
+
+  .character-name {
+    font-family: 'Cardo', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .character-description {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--moonlight);
+  }
+
+  /* ============================================
+     WHAT READERS SAY
+  ============================================ */
+  .reviews-section {
+    background: linear-gradient(to bottom, var(--ink) 0%, var(--steel) 30%, var(--steel) 70%, var(--ink) 100%);
+    padding: 100px 8%;
+    position: relative;
+  }
+
+  .reviews-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  /* Civilian Uncle Rudy portrait background */
+  .reviews-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('images/Rudy_Carriker_768x933.jpg');
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.22;
+    z-index: 0;
+  }
+
+  .reviews-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .review-card {
+    background: rgba(10,10,15,0.05);
+    border: 1px solid rgba(201,168,76,0.12);
+    padding: 32px;
+    margin-bottom: 28px;
+  }
+
+  .review-card:last-child { margin-bottom: 0; }
+
+  .review-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--moonlight);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .review-attribution {
+    font-family: 'Cardo', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .review-detail {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: rgba(143,163,184,0.5);
+    margin-top: 4px;
+  }
+
+  /* ============================================
+     ABOUT THE AUTHOR STRIP
+  ============================================ */
+  .author-strip {
+    background: var(--ink);
+    padding: 80px 8%;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 60px;
+    align-items: start;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .author-strip::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(143,163,184,0.2), transparent);
+  }
+
+  .author-photo {
+    width: 180px;
+    height: 220px;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(30%);
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .author-bio-mini h3 {
+    font-family: 'Cardo', serif;
+    font-size: 1.4rem;
+    color: rgba(210,205,195,0.72);
+    margin-bottom: 6px;
+  }
+
+  .author-bio-mini .author-title {
+    font-family: 'Cardo', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .author-bio-mini p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--silver);
+    margin-bottom: 16px;
+  }
+
+  .author-bio-mini a {
+    font-family: 'Cardo', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.3s;
+  }
+
+  .author-bio-mini a:hover { border-color: var(--gold); }
+
+  /* ============================================
+     FOOTER
+  ============================================ */
+  footer {
+    background: rgba(10,10,15,0.98);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 40px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-script {
+    font-family: 'Cardo', serif;
+    font-size: 1.1rem;
+    color: var(--silver);
+    opacity: 0.6;
+  }
+
+  .footer-copy {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(143,163,184,0.35);
+    text-transform: uppercase;
+  }
+
+  footer nav {
+    position: static;
+    background: none;
+    border: none;
+    padding: 0;
+    gap: 0;
+  }
+
+  footer nav a {
+    font-size: 0.72rem;
+    padding: 4px 12px;
+  }
+
+  /* ============================================
+     ANIMATIONS
+  ============================================ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============================================
+     RESPONSIVE
+  ============================================ */
+  @media (max-width: 768px) {
+    .book-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .cover-wrap { margin: 0 auto; }
+    nav { padding: 14px 20px; }
+    nav a { padding: 4px 10px; font-size: 0.75rem; }
+    .author-strip {
+      grid-template-columns: 1fr;
+    }
+    .author-photo { width: 140px; height: 170px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==============================
+     NAV
+============================== -->
+<nav>
+  <a href="index.html">My Hangar</a>
+  <a href="index.html#identification">Identification</a>
+  <div class="dropdown">
+    <a href="#">My Books ▾</a>
+    <div class="dropdown-content">
+      <a href="a-silver-ring.html" style="color:var(--gold);">A Silver Ring</a>
+      <a href="a-shimmering-light.html">A Shimmering Light</a>
+    </div>
+  </div>
+  <a href="essays.html">My Essays</a>
+  <a href="index.html#visuals">Visuals</a>
+  <a href="mixtape.html">My Mixtape</a>
+  <a href="index.html#fpv-teaser">bLogbook</a>
+  <a href="index.html#position-report">Position Report</a>
+</nav>
+
+
+<!-- ==============================
+     HERO
+============================== -->
+<section class="book-hero">
+  <div data-img="lib.JPG" style="position:absolute;inset:0;z-index:0;"></div>
+  <div class="book-hero-inner">
+
+    <div class="cover-wrap">
+      <div class="cover-img" data-img="asr_front_cover.jpg"></div>
+      <p class="cover-isbn">ISBN 978-0-9836419-0-2</p>
+    </div>
+
+    <div class="book-meta-block">
+      <p class="book-label">Karcher Prince Publishing · 2011</p>
+      <div class="book-genre-row">
+        <span class="genre-tag">Literary Fiction</span>
+        <span class="genre-tag">Historical</span>
+        <span class="genre-tag">Family Saga</span>
+      </div>
+
+      <p class="book-hook">
+        Every soul has a Mission — but every life has its Fate.
+      </p>
+
+      <div class="buy-group">
+        <a href="#" class="btn-buy">Order Now</a>
+        <a href="#synopsis" class="btn-secondary">Read More</a>
+      </div>
+      <p class="buy-note">Buy link coming soon · Available through IngramSpark</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==============================
+     SYNOPSIS
+============================== -->
+<section class="synopsis-section" id="synopsis">
+  <div data-img="the_ring.jpg" style="position:absolute;top:8px;right:8px;width:1px;height:1px;z-index:1;"></div>
+  <div class="synopsis-inner">
+
+    <span class="section-eyebrow">The Story</span>
+    <h2 class="synopsis-tagline">A family estranged by war. A secret that binds them forever.</h2>
+    <div class="synopsis-rule"></div>
+
+    <div class="synopsis-body">
+      <p>
+        If the Army had just let Wes Hutchinson be a pilot, maybe things would have been different. He'd get to marry his English love, Melody. They might have had a son he could teach to fly. Perhaps after the war Wes could have even squared things up with his sister's suitor, small town miscreant Frank Lawton. Their children could have been playmates; it would have been so perfect.
+      </p>
+      <p>
+        But the day after Melody gives him a special gift and tries to tell him she's pregnant, combat gives Wes his life's wish. Left at the controls of his crew's ravaged bomber — with enemy fighters diving in for the kill — for his last harrowing minutes on Earth, he's a pilot.
+      </p>
+      <p>
+        Mired in a fog of shame and heartbreak, Melody carries Wes' photo, his child, and the gift he left behind to his family in America. But by the time she reaches them, grief — and now-hometown-hero Frank Lawton — have taken their toll. We can only fight so hard, so long.
+      </p>
+      <p>
+        Forty years later, war orphan Justin Prator can't explain the talent for flying he and his son Paul share, until he's contacted by his birth mother, a kindly old woman with a stubborn English accent. The same day, Paul falls in love with an oddly familiar firebrand. Before they wed, Paul's "new" grandmother presents him with their family's lost icon — a silver ring — and pulls a smoldering tinderbox from the emotional rubble of World War Two.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==============================
+     MY INSPIRATION
+============================== -->
+<section class="inspiration-section" id="inspiration">
+  <div data-img="Uncle_Rudy.jpg" style="position:absolute;top:8px;right:8px;width:1px;height:1px;z-index:1;"></div>
+  <div class="inspiration-inner">
+
+    <span class="section-eyebrow">My Inspiration</span>
+    <h2 class="synopsis-tagline">Uncle Rudy never came home</h2>
+    <div class="synopsis-rule"></div>
+
+    <div class="inspiration-content">
+      <p class="inspiration-opener">
+        I may have been all of five years old when I first heard his story.
+      </p>
+      
+      <p>
+        Probably upset over some teasing from one of my four older siblings, perhaps I asked my dad if he had any brothers or sisters. He did. Four brothers and a sister. I'd never met any of them, and wasn't likely to start any time soon. They were scattered all over. His sister was clear out in Washington; no one had spoken to her in years, and his older brother was killed in The War.
+      </p>
+      
+      <p>
+        There'd been three of those since he was born. He even served in one, but only a certain, different one was <em>The War</em>: the one that took his favorite older brother, Rudy.
+      </p>
+      
+      <p>
+        I don't remember this conversation taking place. I only remember the effect of it. I became obsessed with my Uncle, the war hero. How few people could claim they had a family member killed in a <em>real</em> war, by <em>real</em> Nazis, my young mind reveled. It made me proud—and sad. I wanted know everything about him.
+      </p>
+      
+      <p>
+        My family has a lot of personalities; most are an acquired taste. Rudy was no exception, but he was probably one of the least uncharismatic. His brothers and sister all described him as the clown of the bunch; always an accomplice if not the instigator, but also the first to help when there was trouble, the first to say "Let's roll," when work needed done.
+      </p>
+      
+      <p>
+        Dad told me he was a genius with machines, forever tinkering with this or that, and that he had a soft spot for airplanes, certainly the most complicated machines then invented. He wanted to be a pilot but at 6'1", he was too tall to fly fighters, and lacking a higher education, he couldn't get an officer's commission, so he settled for working as a flight engineer on a bomber. An early enlistee, he was inducted into one of the longest-serving, bloodiest, most highly decorated units in the Army Air Corps: the 93rd Heavy Bombardment Group, known colloquially, with its English spelling, as "Ted's Travelling Circus."
+      </p>
+      
+      <p>
+        I spent my childhood reading books, building models, and dreaming about anything that flew, but mostly the airplanes from my Uncle Rudy's era. It wasn't natural. It wasn't normal. Most kids don't even know or care to know that much about their living aunts and uncles, let alone one that was gone a quarter-century before we came into the world, but for reasons I hope to someday learn, I couldn't learn enough about Uncle Rudy's War.
+      </p>
+      
+      <p>
+        Dad always said he thought Uncle Rudy's interest in airplanes probably gave rise to his own, but for whatever reason, in 1978, he decided the time had come for him to learn to fly. For the next eight years, we were inseparable whenever the drone of a propeller or the leaden funk of aviation gasoline were in the air.
+      </p>
+      
+      <p>
+        For a while, I thought perhaps I'd get the chance to reprise Uncle Rudy's dream by becoming a fighter pilot myself. When I learned my new eyeglasses would rule that out, I was inconsolable. It wasn't fair, and it didn't make good sense. At some point, it dawned on me that, like him, I'd been disqualified from the life we'd both wanted for ourselves by a seemingly capricious policy meted out with utter inflexibility by an unconcerned bureaucracy. I rail against such policies to this day.
+      </p>
+      
+      <p>
+        Around that time, I began reading Richard Bach's work, highly spiritual writing wrapped like fabric around Flying's ribs, stringers, and longerons, laced with the idea of Reincarnation. If the light was right, and if I wore a certain expression I couldn't even hold on command, let alone make intentionally, and if someone took a picture from just the right angle, I fancied, I looked just like him.
+      </p>
+      
+      <p style="font-style: italic; font-size: 1.1rem; margin: 30px 0; opacity: 0.9;">
+        What if...
+      </p>
+      
+      <div class="rudy-facts-box" style="background: rgba(42,61,82,0.3); padding: 30px; margin: 40px 0; border-left: 3px solid var(--gold);">
+        <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 20px;">
+          <strong>TSgt. Raymond "Rudy" Carriker</strong><br>
+          Flight engineer and gunner, 93rd Bombardment Group<br>
+          B-24 Liberator bombers from Hardwick, England<br>
+          22 missions completed<br>
+          Died for country April 1, 1944
+        </p>
+        
+        <p style="margin: 20px 0;">
+          Stricken aircraft blown up in flight by fighter attack north of Reims, France, trying to limp home damaged and alone. All but one crew member died.
+        </p>
+        
+        <p style="margin: 20px 0;">
+          Rudy lived twenty-two years. He never met his nephew Nathan, who grew up to become a pilot himself and spend five years writing a novel about flying, family, and how war echoes through generations.
+        </p>
+      </div>
+
+      <div class="inspiration-quote">
+        "I don't feel like I'm writing this book as much as I'm taking dictation. I just want to know who's dictating it to me."
+        <div style="text-align: right; margin-top: 12px; font-size: 0.9rem; opacity: 0.7;">— Nathan Carriker, <em>The Pilot's Journey Podcast</em>, January 2012</div>
+      </div>
+
+      <p style="margin-top: 30px;">
+        <em>A Silver Ring</em> is dedicated to the memory of Raymond "Rudy" Carriker and the men of the 93rd Bombardment Group.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==============================
+     HISTORICAL NOTE
+============================== -->
+<section class="history-section" id="history">
+  <div data-img="Ploesti_B-24.jpg" style="position:absolute;top:8px;right:8px;width:1px;height:1px;z-index:1;"></div>
+  <div class="history-inner">
+
+    <span class="section-eyebrow">Historical Note</span>
+    <h2 class="synopsis-tagline">Why Wes couldn't fly</h2>
+    <div class="synopsis-rule"></div>
+
+    <div class="history-content">
+      <p>
+        By the time Pearl Harbor was attacked, many Americans knew it was only a matter of time before the United States were drawn into the War. When the war began, the only services with pilots were the Navy and the Air Force, which then existed as the Army Air Corps. Pilots were officers in all services, and officers were, at the war's outset, required to be college graduates. Also, the cramped cockpits of the relatively small fighter planes of the day would not accommodate men taller than six feet. In classic military logic, since no recruit could be guaranteed not to be ordered into a fighter squadron, no tall men could fly, despite the fact that the cargo planes and heavy bombers had plenty of cockpit room. Thus, Wes Hutchinson, a simple high school senior from Kansas, joined the Air Corps as a Flight Engineer, an enlisted position that gave him joint responsibility for the airplane while in flight, along with the pilots.
+      </p>
+      
+      <p>
+        While they focused on ensuring the plane followed the course laid out by the navigator and radio operator, the flight engineer's job was to see after the myriad mechanical details of keeping the airplane in the best possible condition. It was a technical, engrossing job that rewarded competence and highlighted ineptitude even before the airplane took damage: engine power, propeller speed, and fuel/air mixture settings were in constant need of adjustment, fuel and oxygen supplies were spread among multiple tanks, finicky generators and first-generation electrical components demanded finesse to work correctly, and dozens of other systems and components that are now virtually maintenance-free or controlled by computer then comprised a technical, never-ending version of "Whack-a-Mole" for one man, the Flight Engineer.
+      </p>
+      
+      <p>
+        American heavy bombers like the B-24 carried a crew of nine: two pilots, a bombardier, navigator, radio operator, flight engineer, two waist gunners, and a tail gunner. When under attack by enemy fighters, the flight engineer had to leave his console to man a machine gun turret in the top of the fuselage behind the cockpit; at such times, damage control had to wait. If the ship survived the attack, an engineer would have to piece together what had happened and figure out the best way to continue. It was no job for an idiot, prima donna, or hothead.
+      </p>
+      
+      <p>
+        The engineer's, bombardier's, tail and waist gunners' fields of fire combined made attack on an intact formation of bombers a formidable and dangerous challenge for enemy fighters. But if a bomber could be damaged and forced out of formation, it became an easy target, like a lone sheep separated from the herd. Such airplanes rarely made it back, and their crews faced the Hobbson's choice of staying with their plane and fighting on, often wounded at least as badly as their ships, or jumping out of them and almost assuredly being taken prisoner, if not worse.
+      </p>
+      
+      <p>
+        Wes Hutchinson was a member of the storied 93rd Heavy Bombardment Group, known for its itchy feet and English (mis)spelling as "Ted's Travelling Circus." The Circus was based in Alconbury and Hardwick, England, but was detached several times to fly from bases in other countries, most notably from a primitive one they scraped up from the barren sands of Benghazi, Libya in 1943, and to which they returned later that year. One purpose of their detachment to Libya was to bomb Sicily in advance of the invasion of Patton's 1st Infantry Division, of which Frank Lawton took part.
+      </p>
+      
+      <p>
+        Following those relatively textbook missions conducted from high altitudes, however, the men began to fly training missions in which they rarely climbed higher than a few thousand feet. Flight at such low altitudes is inherently more dangerous; navigation is difficult at best, and often impossible because the view is so limited. The men of Ted's Travelling Circus didn't know they were training for a mission so important, and so costly, that Air Corps Commanding General Ira Eaker considered 50% casualties both likely and justifiable. The target was the oil refining capital of the Third Reich, Ploesti, Romania.
+      </p>
+      
+      <p>
+        Eaker's casualty estimates proved correct, but critical contingency planning and navigational errors combined to cause two of the three bomber groups participating in the raid to approach the target from two different directions simultaneously, creating utter havoc over the target. This and a vastly underestimated anti-aircraft defense saved the target from the destruction that could have justified the raid's sickening human toll. Several Medals of Honor were awarded, most of them posthumously, but the refineries were back at full production only weeks after the raid.
+      </p>
+      
+      <p>
+        On their return to England, the men of the 93rd enjoyed a relatively slow winter, thanks to the dismal winter weather over northwestern Europe. By spring, however, with fuel and ordnance supplies threatening to crowd the men off their bases, the Allied Command began 'round-the-clock bombardment of Germany. The punishing campaign reached its zenith late in March, 1944, in what became known as "Big Week," during which the American 8th Air Force alone dropped over 10,000 tons of bombs. Wes Hutchinson, having survived both Ploesti and Big Week, was nearing his crucial twenty-fifth combat mission, at which point his combat tour of duty would have ended, when his luck ran out.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==============================
+     MEET THE CHARACTERS
+============================== -->
+<section class="characters-section" id="characters">
+  <div data-img="Jack_Carriker_Clan_c_1941.jpg" style="position:absolute;top:8px;right:8px;width:1px;height:1px;z-index:1;"></div>
+  <div class="characters-inner">
+
+    <span class="section-eyebrow">Meet the Characters</span>
+    <h2 class="synopsis-tagline">Two families · Four decades · Seven lives</h2>
+    <div class="synopsis-rule"></div>
+
+    <div class="character-card">
+      <h3 class="character-name">Eileen Hutchinson</h3>
+      <p class="character-description">
+        Levi Hutchinson's only daughter, Eileen grows up awash in testosterone—and learns well how to make it suit her purposes. She falls in love with a boy no one else understands, least of all her father, Levi.
+      </p>
+    </div>
+
+    <div class="character-card">
+      <h3 class="character-name">Wesley Hutchinson</h3>
+      <p class="character-description">
+        Eileen's older brother and their father's pride and trusted helper. Wes gets his mechanical education working with him in Oklahoma's oilfields through the Great Depression. Wes is still puzzling over how to "fix" his sister's suitor when Pearl Harbor is attacked, taking both he and Frank Lawton out of her life and off to war. Though his first love is his plane, the heavy bomber his crew and the Army entrust to his care, the war's carnage leaves him craving the softer, quieter love of English debutante, Melody.
+      </p>
+    </div>
+
+    <div class="character-card">
+      <h3 class="character-name">Frank Lawton</h3>
+      <p class="character-description">
+        At eighteen, Frank's already the veteran of a five-year war with his widowed, abusive father, and indomitable by anyone else except his love, Eileen Hutchinson. His devil-may-care brands him as their town's menace before the war, but returns him to it a hero—to everyone but Eileen's family, still grieving the loss of their Wesley.
+      </p>
+    </div>
+
+    <div class="character-card">
+      <h3 class="character-name">Melody Thompson</h3>
+      <p class="character-description">
+        The beautiful daughter of a prominent family in her quiet hometown is openly cynical of the "cheeky Yank flyboys" who've taken over Hardwick, but she senses a staid sincerity in Wesley that leaves her open to the unthinkable—leaving England for his America after the war.
+      </p>
+    </div>
+
+    <div class="character-card">
+      <h3 class="character-name">Justin Prator</h3>
+      <p class="character-description">
+        The well-intending but hapless war orphan just can't seem to get his life on track. In his forties with two grown children when his birth mother finds him, he's already had two careers, a failed marriage, and alcoholism pass through his meager life. With a single conversation, however, he sees himself transformed from an anonymous extra to the precious, thin link between an unsung hero and the destiny he was denied.
+      </p>
+    </div>
+
+    <div class="character-card">
+      <h3 class="character-name">Paul Prator</h3>
+      <p class="character-description">
+        Driven and successful at an early age, Paul's talent for flying's almost as formidable as the chip on his shoulder. Nearsightedness keeps him from flying in the military but not the airlines. When an emergency lands him a chance to have his dream, he finds it at odds with his true purpose in life—becoming Christina Lawton's husband.
+      </p>
+    </div>
+
+    <div class="character-card">
+      <h3 class="character-name">Christina Lawton</h3>
+      <p class="character-description">
+        Enough like her grandfather to become the first woman on his family-dominated Cleveland Fire Department, Christina looks forward to stepping out of Frank's long shadow. But when headtable chitchat at their wedding reception unearths the secret connection between her and Paul, she gets more distance than she bargained for. The only way she can have her husband and keep her family is to divulge a beautiful secret of her own: the unlikely, unborn grandchild of both Wesley and Eileen Hutchinson.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==============================
+     WHAT READERS SAY
+============================== -->
+<section class="reviews-section" id="reviews">
+  <div data-img="Rudy_Carriker_768x933.jpg" style="position:absolute;top:8px;right:8px;width:1px;height:1px;z-index:1;"></div>
+  <div class="reviews-inner">
+
+    <span class="section-eyebrow">What Readers Say</span>
+    <h2 class="synopsis-tagline">All 5-star reviews</h2>
+    <div class="synopsis-rule"></div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "This was a very enjoyable and well written book. I quickly became invested in the characters from the pilots to the fire fighters. The author was able to move between past and present without any confusion to this reader. He was able to express the feelings that the aviators held for their flying machines as well as the camaraderie within the firefighters. If you enjoy historical fiction as much as I do, I would highly recommend this novel. Kudos to Mr. Carriker for writing a perfect page turner!"
+      </p>
+      <p class="review-attribution">Alexandra</p>
+      <p class="review-detail">Amazon Verified Purchase · January 2026</p>
+    </div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "Grateful to read this wonderfully written book that weaves family and well-developed characters across multiple decades with exhilarating flying themes. Nathan surely has another book in him to update us with more flying and family stories as a backdrop to the challenges of modern times."
+      </p>
+      <p class="review-attribution">Concerned Citizen</p>
+      <p class="review-detail">Amazon Verified Purchase · February 2025</p>
+    </div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "Read the book through in about two sittings, which is good for me as I'm basically a periodical reader. As a retired professional pilot, but not a military pilot I found the story engaging and accurate as much as I know about Military aviation. My father was an instructor in WWII and my father in law a 50 mission B-24 pilot and I felt as if I was right there with the characters. It's a love story but not too sappy for those of us not endeared to that type of book, so there's certainly something there for the ladies too."
+      </p>
+      <p class="review-attribution">Karen W</p>
+      <p class="review-detail">Retired professional pilot · Father-in-law flew 50 B-24 missions in WWII · May 2020</p>
+    </div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "I have been under the impression this book was a first for this author, so began reading it expecting a 'beginner's touch.' I was impressed with his word choices, his descriptions, and the maturity of his writing—well developed—not simple or juvenile. My husband likes 'heavy weight' books, so this might not have reached that level, but it was perfect for me. (For that matter, he enjoyed the book, too. Ha). Four different families, two different time lines, all perfectly woven together, back and forth, intertwining in a most unpredictable, yet beautiful way. Men and women alike will enjoy reading this, and....I'd read another by this author if I had the chance."
+      </p>
+      <p class="review-attribution">Cleo Patra</p>
+      <p class="review-detail">Amazon Verified Purchase · November 2015</p>
+    </div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "Great summer read, even if you aren't an aviator. The author took time to develop the characters as the story unfolds."
+      </p>
+      <p class="review-attribution">muriel zarlingo</p>
+      <p class="review-detail">Amazon Verified Purchase · July 2013</p>
+    </div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "It is said that everyone has at least one book in them. I hope this is not the only time we hear from Mr. Carriker. As little as I know about aviation, the way this book is written, I could follow easily. One thing I have a difficulty with is a surprise ending. I usually have it figured out long before the end. Not in this case. Mr. Carriker has left me wanting more! I want to know what happens with the characters and how their lives unfold. It is a wonderful story about 'real' heroes! Can't wait for the next book!"
+      </p>
+      <p class="review-attribution">Kristimoose</p>
+      <p class="review-detail">Amazon Verified Purchase · March 2013</p>
+    </div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "A book I could not put down, written by a pilot and author who has a deep passion for aviation which you can feel as you turn the pages. Some authors have a gift in putting their thoughts and ideas to paper that catch the reader. Nathan Carriker is one of those writers. Looking forward to his next book."
+      </p>
+      <p class="review-attribution">AAflyer</p>
+      <p class="review-detail">Amazon Verified Purchase · January 2013</p>
+    </div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "A riveting aviation love story that's impossible to put down. I would highly recommend A Silver Ring for any aviation enthusiast, young or old. Mr. Carriker brings you along in the cockpit in authentic fashion on par with any of the great aviation authors. A 'must read!'"
+      </p>
+      <p class="review-attribution">Derailed</p>
+      <p class="review-detail">Amazon Verified Purchase · February 2012</p>
+    </div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "Nathan has done an outstanding job of writing a story that anyone can identify with if they have ever lived. Of course pilots old and new will see the parallels of their own lives or of the people that they know through the always small world of aviation. This book even offers up how small the world of aviation truly is. Romantics will more than identify with the relationship side of this book between parents and kids, siblings, lovers, and married couples. It is a tale that I identified with in so many ways yet it was so different from my own life, and I believe most readers will be able to insert themselves into the book in their fitting role. The flying scenarios are very accurate and truthful. The non-pilot will be able to understand as good as the highly experienced aviator."
+      </p>
+      <p class="review-text">
+        "As a civilian trained airline pilot, trained by my best friend my father who passed away very prematurely, and now raising what promises to be a third generation pilot, I can recommend this book to all readers, but especially those with a love for aviation and the camaraderie that surrounds those of us so taken in by it. I only hope that Nathan has more of this kind of story to share with us."
+      </p>
+      <p class="review-attribution">Thomas J. Knutson</p>
+      <p class="review-detail">Airline pilot · August 2011</p>
+    </div>
+
+    <div class="review-card">
+      <p class="review-text">
+        "A Silver Ring is, simply put, an aviation love story. Set in both World War II and the late 1980s, its characters from both periods are entwined throughout the book. The story documents an incredible journey for each character and it is a high-altitude ride of action, emotion, and anticipation. The author has an obvious passion for aviation and it launches off every page. The flying scenes are highly descriptive and even a non-pilot would understand what is happening in the cockpit as the drama unfolds. There are two major flight events in the book, one in WWII and one in modern day, that are eerily similar and further serve to connect the past with the present. But this is not just a book about flying: this is a book filled with heartbreak, love, shame, depression, joy and revelation. It's a book about relationships between parents and sons, between lovers, between friends, between forebears and descendants."
+      </p>
+      <p class="review-text">
+        "I read the first few chapters on the author's web site before the book was released. I could not wait to see what happened next and, once the actual book was in my hands, I could not put it down. The author expressively conveys the flaws of each character and I felt I was reading about real people rather than fictional ones. There were some personalities I didn't particularly like and that made the story seem all the more real. I felt I was right there with all of them as they lived through each experience. Even after I felt I knew them, they continued to astonish me as the book progressed."
+      </p>
+      <p class="review-text">
+        "The story transitions smoothly back and forth between time periods. Each chapter left me hanging in anticipation of the next. The author's writing style is conversational and the story rolls along easily. There are many surprises and twists, some of them completely shocking and unexpected."
+      </p>
+      <p class="review-text">
+        "While aviation and history lovers will appreciate this book, I also recommend it to anyone who enjoys a good read as much as I do. I finished the book and I still can't wait to see what happens next...I hope there's a sequel."
+      </p>
+      <p class="review-attribution">gcrowder</p>
+      <p class="review-detail">Amazon Verified Purchase · August 2011</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==============================
+     AUTHOR
+============================== -->
+
+
+<!-- ==============================
+     FOOTER
+============================== -->
+<footer>
+  <span class="footer-script">vergence.space</span>
+  <nav>
+    <a href="index.html">My Hangar</a>
+    <a href="essays.html">My Essays</a>
+    <a href="mixtape.html">My Mixtape</a>
+    <a href="a-shimmering-light.html">A Shimmering Light</a>
+    <a href="index.html#position-report">Position Report</a>
+  </nav>
+  <span class="footer-copy">© 2026 Nathan Carriker · Karcher Prince Publishing</span>
+</footer>
+
+<!-- IMAGE FILENAME LABELER -->
+<script>
+(function() {
+  var LBL = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(28,34,48,0.92);color:rgba(201,168,76,0.75);font-family:Cardo,serif;font-size:0.62rem;letter-spacing:0.18em;text-align:center;padding:12px;pointer-events:none;z-index:10;';
+  function label(el, name) {
+    el.style.position = 'relative';
+    var d = document.createElement('div');
+    d.style.cssText = LBL;
+    d.textContent = name;
+    el.appendChild(d);
+  }
+  // img tags — label only on failure
+  document.querySelectorAll('img').forEach(function(img) {
+    function handle() {
+      if (img.naturalWidth === 0) {
+        var name = decodeURIComponent(img.src.split('/').pop());
+        img.style.opacity = '0';
+        label(img.parentNode, name);
+      }
+    }
+    if (img.complete) handle();
+    else { img.onload = handle; img.onerror = handle; }
+  });
+  // CSS background containers — test load before labeling
+  document.querySelectorAll('[data-img]').forEach(function(el) {
+    var name = el.getAttribute('data-img');
+    var test = new Image();
+    test.onload = function() { /* loaded fine — do nothing */ };
+    test.onerror = function() { label(el, name); };
+    test.src = 'images/' + name;
+  });
+})();
+</script>
+
+</body>
+</html>

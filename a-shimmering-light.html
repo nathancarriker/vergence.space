@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Shimmering Light | vergence.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Cardo:ital,wght@0,400;1,400&family=Ruthie&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:       #0a0a0f;
+    --steel:     #1c2230;
+    --mist:      #2e3d52;
+    --silver:    #8fa3b8;
+    --moonlight: #c8d8e8;
+    --gold:      #c9a84c;
+    --pale:      #e8e4dc;
+    --white:     #f5f2ed;
+    --accent:    #4a7fa5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--pale);
+    font-family: 'Times New Roman', Times, serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(10,10,15,0.97);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  nav a {
+    color: rgba(143,163,184,0.75);
+    text-decoration: none;
+    font-family: 'Cardo', serif;
+    font-size: 0.88rem;
+    letter-spacing: 0.08em;
+    padding: 6px 18px;
+    border-right: 1px solid rgba(143,163,184,0.15);
+    transition: color 0.3s ease;
+  }
+  nav a:last-child { border-right: none; }
+  nav a:hover { color: var(--gold); }
+  nav .dropdown { position: relative; display: inline-block; }
+  nav .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10,10,15,0.97);
+    border: 1px solid rgba(143,163,184,0.15);
+    border-top: 1px solid rgba(201,168,76,0.35);
+    min-width: 180px;
+    padding: 8px 0;
+  }
+  nav .dropdown:hover .dropdown-content { display: block; }
+  nav .dropdown-content a {
+    display: block;
+    border-right: none;
+    border-bottom: 1px solid rgba(143,163,184,0.1);
+    padding: 10px 20px;
+    font-size: 0.84rem;
+  }
+  nav .dropdown-content a:last-child { border-bottom: none; }
+
+  /* HERO */
+  .crash-hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .crash-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('images/1774734926378_yankee.jpg');
+    background-size: cover;
+    background-position: center 40%;
+    filter: grayscale(60%) brightness(0.35);
+    transform: scale(1.03);
+    transition: transform 8s ease;
+  }
+  .crash-hero:hover .crash-bg { transform: scale(1.0); }
+  .crash-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10,10,15,0.3) 0%,
+      rgba(10,10,15,0.1) 40%,
+      rgba(10,10,15,0.85) 80%,
+      rgba(10,10,15,1) 100%
+    );
+  }
+  .crash-hero-text {
+    position: relative;
+    z-index: 2;
+    padding: 80px 8% 100px;
+    max-width: 800px;
+  }
+  .hero-eyebrow {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-date {
+    font-family: 'Cardo', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    letter-spacing: 0.05em;
+    margin-bottom: -20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+  .hero-hook {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--moonlight);
+    line-height: 1.65;
+    max-width: 620px;
+    border-left: 2px solid var(--gold);
+    padding-left: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  /* STORY */
+  .story-section {
+    background: var(--ink);
+    padding: 100px 8%;
+    position: relative;
+  }
+  .story-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .story-text .section-eyebrow {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .story-text h2 {
+    font-family: 'Cardo', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--white);
+    margin-bottom: 36px;
+    line-height: 1.2;
+  }
+  .story-text p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--moonlight);
+    margin-bottom: 24px;
+  }
+  .story-text p:last-child { margin-bottom: 0; }
+
+  /* Photo sidebar */
+  .story-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .sidebar-photo {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(25%);
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .sidebar-caption {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(143,163,184,0.4);
+    text-align: center;
+    margin-top: -16px;
+  }
+  .sidebar-stat-block {
+    background: var(--steel);
+    border: 1px solid rgba(201,168,76,0.12);
+    padding: 28px;
+  }
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(143,163,184,0.08);
+    gap: 16px;
+  }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--silver);
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+  .stat-value {
+    font-size: 0.9rem;
+    color: var(--moonlight);
+    text-align: right;
+  }
+
+  /* HOSPITAL PHOTO STRIP */
+  .hospital-strip {
+    background: var(--steel);
+    padding: 60px 8%;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .hospital-strip-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .hospital-photo {
+    width: 100%;
+    filter: grayscale(30%) sepia(10%);
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .hospital-text {
+    padding: 20px 0;
+  }
+  .hospital-text .section-eyebrow {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .hospital-text p {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--moonlight);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .hospital-caption {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(143,163,184,0.4);
+    margin-top: 12px;
+  }
+
+  /* VIDEO */
+  .video-section {
+    background: var(--steel);
+    padding: 80px 8%;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .video-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .video-eyebrow {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 20px;
+  }
+  .video-title {
+    font-family: 'Cardo', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    color: var(--white);
+    margin-bottom: 40px;
+    line-height: 1.3;
+  }
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+
+  /* HEADLINE PHOTO */
+  .headline-photo {
+    width: 100%;
+    max-width: 700px;
+    margin: 40px auto 0;
+    display: block;
+    filter: grayscale(20%) sepia(15%);
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .video-caption {
+    font-family: 'Cardo', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: rgba(143,163,184,0.5);
+    margin-top: 24px;
+    line-height: 1.8;
+  }
+
+  /* BOOK COMING */
+  .book-coming {
+    background: var(--ink);
+    padding: 100px 8%;
+    text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .book-coming-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .coming-eyebrow {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 24px;
+  }
+  .coming-title {
+    font-family: 'Cardo', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .coming-author {
+    font-family: 'Ruthie', cursive;
+    font-size: 2.2rem;
+    color: var(--silver);
+    opacity: 0.7;
+    margin-bottom: 32px;
+  }
+  .coming-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 40px;
+  }
+  .coming-description {
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--moonlight);
+    margin-bottom: 32px;
+    text-align: left;
+  }
+  .coming-badge {
+    display: inline-block;
+    font-family: 'Cardo', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 12px 32px;
+    margin-bottom: 40px;
+  }
+  .notify-line {
+    font-size: 0.9rem;
+    color: rgba(143,163,184,0.5);
+    font-style: italic;
+  }
+  .notify-line a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+
+  /* FOOTER */
+  footer {
+    background: rgba(10,10,15,0.98);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 40px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-script {
+    font-family: 'Cardo', serif;
+    font-size: 1.1rem;
+    color: var(--silver);
+    opacity: 0.6;
+  }
+  .footer-copy {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(143,163,184,0.35);
+    text-transform: uppercase;
+  }
+  footer nav {
+    position: static;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  footer nav a { font-size: 0.72rem; padding: 4px 12px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .story-grid { grid-template-columns: 1fr; }
+    .hospital-strip-inner { grid-template-columns: 1fr; }
+    .story-sidebar { flex-direction: row; flex-wrap: wrap; }
+    .sidebar-photo { width: 200px; }
+    nav { padding: 14px 20px; }
+    nav a { padding: 4px 10px; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">My Hangar</a>
+  <a href="index.html#identification">Identification</a>
+  <div class="dropdown">
+    <a href="#">My Books ▾</a>
+    <div class="dropdown-content">
+      <a href="a-silver-ring.html">A Silver Ring</a>
+      <a href="a-shimmering-light.html" style="color:var(--gold);">A Shimmering Light</a>
+    </div>
+  </div>
+  <a href="essays.html">My Essays</a>
+  <a href="index.html#visuals">Visuals</a>
+  <a href="mixtape.html">My Mixtape</a>
+  <a href="index.html#fpv-teaser">bLogbook</a>
+  <a href="index.html#position-report">Position Report</a>
+</nav>
+
+
+<!-- HERO -->
+<section class="crash-hero">
+  <div class="crash-bg" data-img="1774734926378_yankee.jpg"></div>
+  <div class="crash-hero-text">
+    <p class="hero-eyebrow">Karcher Prince Publishing &nbsp;·&nbsp; Forthcoming Memoir</p>
+    <p class="hero-date">1994</p>
+    <h1 class="hero-title">A Shimmering<br>Light</h1>
+    <p class="hero-hook">
+      "Flying's almost killed me a couple of times, but it saves me every day."
+    </p>
+  </div>
+</section>
+
+
+<!-- THE STORY -->
+<section class="story-section">
+  <div class="story-grid">
+
+    <div class="story-text">
+      <span class="section-eyebrow">December 14, 1994</span>
+      <h2 style="white-space:nowrap; font-size:clamp(1.2rem, 2.5vw, 2.4rem); font-family:'IM Fell English',serif; font-style:italic;">Flying was all I had.&nbsp;&nbsp;Then I didn't.</h2>
+
+      <p>
+        The full story of the crash, the night and morning after, the rescue, and the year that followed. Of the doctors who said I wouldn't walk again, and the miracle I couldn't expect — worked through my friends, family, and caregivers — that proved them wrong. Of the day I climbed back into my only safe place in this world — an airplane cockpit — exactly three hundred and sixty-five days after I'd squandered everything I'd ever earned or been given. The changes I made, and the one I should but still haven't, just on the other side of "Impossible…"
+      </p>
+
+      <div style="margin-top:32px;">
+        <span class="coming-badge" style="display:inline-block; font-family:'Cardo',serif; font-size:0.72rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink); background:var(--gold); padding:12px 32px;">In Progress</span>
+      </div>
+    </div>
+
+    <div class="story-sidebar">
+      <img src="images/Yankee_Nate_805x897.jpg" alt="Nathan Carriker with the Yankee" class="sidebar-photo">
+      <p class="sidebar-caption">Nathan with "The Blue Feather"</p>
+
+      <div class="sidebar-stat-block">
+        <div class="stat-row">
+          <span class="stat-label">Date</span>
+          <span class="stat-value">Dec 14, 1994</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Location</span>
+          <span class="stat-value">Martinez Canyon, CA</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Aircraft</span>
+          <span class="stat-value">AA-1 Yankee</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Injury</span>
+          <span class="stat-value">T12 burst fracture</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Prognosis</span>
+          <span class="stat-value">paraparesis/paraplegia</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Return to service</span>
+          <span class="stat-value">One year to the day</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Current</span>
+          <span class="stat-value">777 Captain</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- HOSPITAL PHOTO -->
+<section class="hospital-strip">
+  <div class="hospital-strip-inner">
+    <div>
+      <img src="images/Xmas_in_Hospital.jpg" alt="Nathan in the hospital, birthday 1994" class="hospital-photo">
+      <p class="hospital-caption">My 25th birthday &nbsp;·&nbsp; December 21, 1994 &nbsp;·&nbsp; Desert Hospital</p>
+    </div>
+    <div class="hospital-text">
+      <span class="section-eyebrow">December 21, 1994</span>
+      <p>That's a birthday cake. I turned 25 exactly one week after the crash. I'm paralyzed in that photo. I didn't know it yet, but my big toes would move for the first time on January 1st — eleven days away.</p>
+      <p>I'm smiling because I had a steady stream of visitors, some of whom I'd never met. And because some stubborn, unreasonable part of me already didn't believe what the doctors were telling me.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- VIDEO -->
+<section class="video-section">
+  <div class="video-inner">
+    <span class="video-eyebrow">The Rescue · As It Happened</span>
+    <h2 class="video-title">Local news coverage compiled from the night of December 14 and morning of December 15, 1994</h2>
+
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/61mQKvukGXc"
+        title="Martinez Canyon Rescue 1994"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <img src="images/headline2.jpg" alt="Desert Sun headline: Pilot rescued after 20 hours" class="headline-photo">
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:860px; margin:40px auto 0;">
+      <div>
+        <img src="images/Star80.jpg" alt="Nathan with rescue team and helicopter N91RC during rehab" style="width:100%; filter:grayscale(20%) sepia(10%); border:1px solid rgba(201,168,76,0.15);">
+        <p class="video-caption" style="margin-top:12px;">With Linda, John, and Ron beside N91RC &nbsp;·&nbsp; During rehabilitation, 1995 &nbsp;·&nbsp; Note the canes.</p>
+      </div>
+      <div>
+        <img src="images/FnFreunion.jpg" alt="Reunion on Fox and Friends, 2016" style="width:100%; filter:grayscale(10%); border:1px solid rgba(201,168,76,0.15);">
+        <p class="video-caption" style="margin-top:12px;">Twenty-two years later &nbsp;·&nbsp; Fox and Friends, Los Angeles &nbsp;·&nbsp; Linda Morelli, John Irish, Ron Cohan, Jim Bixby</p>
+      </div>
+    </div>
+
+    <p class="video-caption">
+      The rescue team: Deputies Linda Morelli and John Irish, Riverside County Sheriff's Aviation Unit &nbsp;·&nbsp; Ron Cohan, CHP Paramedic<br><br>
+      Twenty-two years later, FNC covered our anniversary reunion in a Los Angeles studio on Fox and Friends.<br>
+      "The debt," I said, "can never be repaid."
+    </p>
+  </div>
+</section>
+
+
+<!-- BOOK DESCRIPTION -->
+<section class="book-coming">
+  <div class="book-coming-inner">
+    <span class="coming-eyebrow">Karcher Prince Publishing &nbsp;·&nbsp; Forthcoming</span>
+
+    <p class="notify-line">
+      Want to know when it's available? <a href="index.html#position-report">Leave your contact below</a> and we'll reach out when it's ready.
+    </p>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-script">vergence.space</span>
+  <nav>
+    <a href="index.html">My Hangar</a>
+    <a href="essays.html">My Essays</a>
+    <a href="mixtape.html">My Mixtape</a>
+    <a href="a-silver-ring.html">A Silver Ring</a>
+    <a href="index.html#position-report">Position Report</a>
+  </nav>
+  <span class="footer-copy">© 2026 Nathan Carriker · Karcher Prince Publishing</span>
+</footer>
+
+<!-- IMAGE FILENAME LABELER -->
+<script>
+(function() {
+  var LBL = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(28,34,48,0.92);color:rgba(201,168,76,0.75);font-family:Cardo,serif;font-size:0.62rem;letter-spacing:0.18em;text-align:center;padding:12px;pointer-events:none;z-index:10;';
+  function label(el, name) {
+    el.style.position = 'relative';
+    var d = document.createElement('div');
+    d.style.cssText = LBL;
+    d.textContent = name;
+    el.appendChild(d);
+  }
+  // img tags — label only on failure
+  document.querySelectorAll('img').forEach(function(img) {
+    function handle() {
+      if (img.naturalWidth === 0) {
+        var name = decodeURIComponent(img.src.split('/').pop());
+        img.style.opacity = '0';
+        label(img.parentNode, name);
+      }
+    }
+    if (img.complete) handle();
+    else { img.onload = handle; img.onerror = handle; }
+  });
+  // CSS background containers — test load before labeling
+  document.querySelectorAll('[data-img]').forEach(function(el) {
+    var name = el.getAttribute('data-img');
+    var test = new Image();
+    test.onload = function() { /* loaded fine — do nothing */ };
+    test.onerror = function() { label(el, name); };
+    test.src = 'images/' + name;
+  });
+})();
+</script>
+
+</body>
+</html>

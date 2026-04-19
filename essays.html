@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Essays | vergence.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Cardo:ital,wght@0,400;1,400&family=Ruthie&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:       #0a0a0f;
+    --steel:     #1c2230;
+    --mist:      #2e3d52;
+    --silver:    #8fa3b8;
+    --moonlight: #c8d8e8;
+    --gold:      #c9a84c;
+    --pale:      #e8e4dc;
+    --white:     #f5f2ed;
+    --accent:    #4a7fa5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--pale);
+    font-family: 'Times New Roman', Times, serif;
+    overflow-x: hidden;
+  }
+
+  /* ============================================
+     NAV
+  ============================================ */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(10,10,15,0.97);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  nav a {
+    color: rgba(143,163,184,0.75);
+    text-decoration: none;
+    font-family: 'Cardo', serif;
+    font-weight: 400;
+    font-size: 0.88rem;
+    letter-spacing: 0.08em;
+    padding: 6px 18px;
+    border-right: 1px solid rgba(143,163,184,0.15);
+    transition: color 0.3s ease;
+  }
+  nav a:last-child { border-right: none; }
+  nav a:hover { color: var(--gold); }
+
+  nav .dropdown { position: relative; display: inline-block; }
+  nav .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10,10,15,0.97);
+    border: 1px solid rgba(143,163,184,0.15);
+    border-top: 1px solid rgba(201,168,76,0.35);
+    min-width: 180px;
+    padding: 8px 0;
+  }
+  nav .dropdown:hover .dropdown-content { display: block; }
+  nav .dropdown-content a {
+    display: block;
+    border-right: none;
+    border-bottom: 1px solid rgba(143,163,184,0.1);
+    padding: 10px 20px;
+    font-size: 0.84rem;
+    letter-spacing: 0.06em;
+  }
+  nav .dropdown-content a:last-child { border-bottom: none; }
+
+  /* ============================================
+     HERO BANNER
+  ============================================ */
+  .page-hero {
+    min-height: 52vh;
+    display: flex;
+    align-items: flex-end;
+    padding: 120px 8% 72px;
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 60%, rgba(74,127,165,0.06) 0%, transparent 60%),
+      linear-gradient(to bottom, rgba(10,10,15,0) 0%, rgba(10,10,15,0.7) 100%);
+  }
+
+  /* Subtle grid texture */
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(143,163,184,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(143,163,184,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .page-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 960px;
+    width: 100%;
+  }
+
+  .page-hero-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .page-hero-title {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(3.2rem, 7vw, 6rem);
+    color: rgba(230, 225, 215, 0.82);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .page-hero-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .page-hero-sub {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    color: rgba(143,163,184,0.7);
+    line-height: 1.6;
+    max-width: 580px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============================================
+     THESIS PULL QUOTE
+  ============================================ */
+  .thesis-section {
+    background: var(--steel);
+    padding: 72px 8%;
+    position: relative;
+  }
+  .thesis-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .thesis-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(143,163,184,0.2), transparent);
+  }
+  .thesis-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .thesis-quote {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+    color: rgba(200,216,232,0.62);
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+  }
+  .thesis-attr {
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 24px;
+  }
+
+  /* ============================================
+     ESSAYS GRID
+  ============================================ */
+  #essays-grid {
+    padding: 100px 8%;
+    background: var(--steel);
+    position: relative;
+  }
+
+  .essays-header {
+    max-width: 960px;
+    margin: 0 auto 60px;
+  }
+
+  .section-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .section-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 0 20px;
+  }
+  .section-title {
+    font-family: 'Cardo', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    letter-spacing: 0.04em;
+    color: rgba(210, 205, 195, 0.72);
+    margin-bottom: 16px;
+  }
+  .section-intro {
+    font-size: 0.92rem;
+    font-style: italic;
+    color: var(--silver);
+    line-height: 1.7;
+    max-width: 580px;
+  }
+
+  .essays-list {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* ============================================
+     ESSAY CARD
+  ============================================ */
+  .essay-card {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 0;
+    align-items: stretch;
+    border: 1px solid rgba(143,163,184,0.1);
+    background: rgba(10,10,15,0.35);
+    transition: border-color 0.3s ease, background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .essay-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.4s ease;
+  }
+
+  .essay-card:hover {
+    border-color: rgba(201,168,76,0.28);
+    background: rgba(28,34,48,0.6);
+  }
+  .essay-card:hover::before { height: 100%; }
+
+  .essay-card.private {
+    border-color: rgba(143,163,184,0.06);
+    opacity: 0.6;
+  }
+  .essay-card.private:hover {
+    border-color: rgba(143,163,184,0.12);
+    background: rgba(10,10,15,0.35);
+    cursor: default;
+  }
+  .essay-card.private::before { display: none; }
+
+  .essay-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(201,168,76,0.06);
+    border-right: 1px solid rgba(143,163,184,0.08);
+    font-family: 'Cardo', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(201,168,76,0.5);
+    padding: 28px 0;
+    min-width: 72px;
+  }
+
+  .essay-body {
+    padding: 28px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .essay-title {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    color: rgba(230, 225, 215, 0.85);
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  .essay-subtitle {
+    font-family: 'Cardo', serif;
+    font-size: 0.75rem;
+    color: var(--silver);
+    line-height: 1.5;
+    font-style: italic;
+    max-width: 520px;
+  }
+
+  .essay-status-col {
+    display: flex;
+    align-items: center;
+    padding: 28px 28px 28px 16px;
+    flex-shrink: 0;
+  }
+
+  .essay-badge {
+    font-family: 'Cardo', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+
+  .badge-complete {
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    background: rgba(201,168,76,0.06);
+  }
+  .badge-progress {
+    color: var(--accent);
+    border: 1px solid rgba(74,127,165,0.4);
+    background: rgba(74,127,165,0.06);
+  }
+  .badge-forthcoming {
+    color: rgba(143,163,184,0.6);
+    border: 1px solid rgba(143,163,184,0.2);
+  }
+  .badge-private {
+    color: rgba(143,163,184,0.4);
+    border: 1px solid rgba(143,163,184,0.12);
+  }
+  .badge-2034 {
+    color: rgba(143,163,184,0.35);
+    border: 1px solid rgba(143,163,184,0.1);
+    font-style: italic;
+  }
+
+  .lock-icon {
+    font-size: 0.65rem;
+    color: rgba(143,163,184,0.3);
+    margin-left: 8px;
+  }
+
+  /* ============================================
+     COMPILATION SECTION
+  ============================================ */
+  #compilation {
+    padding: 100px 8%;
+    background: var(--steel);
+    position: relative;
+  }
+  #compilation::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .compilation-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .compilation-text h2 {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: rgba(230, 225, 215, 0.82);
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+
+  .compilation-text p {
+    font-size: 0.92rem;
+    line-height: 1.85;
+    color: var(--moonlight);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .compilation-card {
+    border: 1px solid rgba(201,168,76,0.2);
+    background: rgba(10,10,15,0.5);
+    padding: 40px;
+    position: relative;
+  }
+  .compilation-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
+
+  .compilation-label {
+    font-family: 'Cardo', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .compilation-title {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: rgba(230, 225, 215, 0.82);
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+
+  .compilation-author {
+    font-family: 'Ruthie', cursive;
+    font-size: 1.4rem;
+    color: var(--silver);
+    margin-bottom: 24px;
+  }
+
+  .compilation-desc {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--moonlight);
+    font-style: italic;
+    margin-bottom: 28px;
+  }
+
+  .btn-buy {
+    display: inline-block;
+    font-family: 'Cardo', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 13px 32px;
+    border: 1px solid var(--gold);
+    transition: all 0.3s ease;
+  }
+  .btn-buy:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .btn-forthcoming {
+    display: inline-block;
+    font-family: 'Cardo', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(143,163,184,0.5);
+    background: transparent;
+    padding: 13px 32px;
+    border: 1px solid rgba(143,163,184,0.2);
+    cursor: default;
+  }
+
+  /* ============================================
+     FOOTER
+  ============================================ */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(143,163,184,0.1);
+    padding: 48px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .footer-wordmark {
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: rgba(143,163,184,0.5);
+  }
+  .footer-copy {
+    font-family: 'Cardo', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: rgba(143,163,184,0.3);
+  }
+  .footer-links {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-family: 'Cardo', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(143,163,184,0.4);
+    text-decoration: none;
+    padding: 4px 16px;
+    border-right: 1px solid rgba(143,163,184,0.15);
+    transition: color 0.3s ease;
+  }
+  .footer-links a:last-child { border-right: none; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ============================================
+     RESPONSIVE
+  ============================================ */
+  @media (max-width: 760px) {
+    .essay-card { grid-template-columns: 48px 1fr; }
+    .essay-status-col { display: none; }
+    .compilation-inner { grid-template-columns: 1fr; }
+    .essay-body { padding: 20px; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html">My Hangar</a>
+  <a href="index.html#identification">Identification</a>
+  <div class="dropdown">
+    <a href="#">My Books ▾</a>
+    <div class="dropdown-content">
+      <a href="a-silver-ring.html">A Silver Ring</a>
+      <a href="a-shimmering-light.html">A Shimmering Light</a>
+    </div>
+  </div>
+  <a href="essays.html">My Essays</a>
+  <a href="index.html#visuals">Visuals</a>
+  <a href="mixtape.html">My Mixtape</a>
+  <a href="index.html#fpv-teaser">bLogbook</a>
+  <a href="index.html#position-report">Position Report</a>
+</nav>
+
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <h1 class="page-hero-title">The Essays</h1>
+    <div class="page-hero-rule"></div>
+    <p class="page-hero-sub">With books, I carve &#8220;I was here&#8221; into stone.<br>In essays, I whisper &#8220;why?&#8221;</p>
+  </div>
+</section>
+
+
+<!-- ESSAYS LIST -->
+<section id="essays-grid">
+  <div class="essays-list">
+
+    <!-- Essay 01 -->
+    <div class="essay-card">
+      <div class="essay-num">01</div>
+      <div class="essay-body">
+        <div class="essay-title">The Sidewalk Savannah</div>
+        <div class="essay-subtitle">When neither fight nor flight is an option.</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-progress">In Progress</span>
+      </div>
+    </div>
+
+    <!-- Essay 02 -->
+    <a href="#" class="essay-card">
+      <div class="essay-num">02</div>
+      <div class="essay-body">
+        <div class="essay-title">N6236L</div>
+        <div class="essay-subtitle">The Blue Feather &nbsp;·&nbsp; Destroying the wish that saved me.</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-complete">Complete</span>
+      </div>
+    </a>
+
+    <!-- Essay 05 -->
+    <div class="essay-card">
+      <div class="essay-num">05</div>
+      <div class="essay-body">
+        <div class="essay-title">Vergence</div>
+        <div class="essay-subtitle">Two perspectives resolving into an accurate measurement of distance &#8212; or depth.</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-progress">In Progress</span>
+      </div>
+    </div>
+
+    <!-- Essay 06 -->
+    <div class="essay-card">
+      <div class="essay-num">06</div>
+      <div class="essay-body">
+        <div class="essay-title" style="color:rgba(230,225,215,0.4);font-style:normal;text-transform:none;">untitled</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-progress">In Progress</span>
+      </div>
+    </div>
+
+    <!-- Essay 07 -->
+    <div class="essay-card">
+      <div class="essay-num">07</div>
+      <div class="essay-body">
+        <div class="essay-title" style="color:rgba(230,225,215,0.4);font-style:normal;text-transform:none;">untitled</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-progress">In Progress</span>
+      </div>
+    </div>
+
+    <!-- Essay 09 -->
+    <div class="essay-card">
+      <div class="essay-num">09</div>
+      <div class="essay-body">
+        <div class="essay-title" style="color:rgba(230,225,215,0.4);font-style:normal;text-transform:none;">untitled</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-progress">In Progress</span>
+      </div>
+    </div>
+
+    <!-- Essay 12 -->
+    <div class="essay-card">
+      <div class="essay-num">12</div>
+      <div class="essay-body">
+        <div class="essay-title" style="color:rgba(230,225,215,0.4);font-style:normal;text-transform:none;">untitled</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-progress">In Progress</span>
+      </div>
+    </div>
+
+    <!-- Essay 14 -->
+    <div class="essay-card">
+      <div class="essay-num">14</div>
+      <div class="essay-body">
+        <div class="essay-title" style="color:rgba(230,225,215,0.4);font-style:normal;text-transform:none;">untitled</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-progress">In Progress</span>
+      </div>
+    </div>
+
+    <!-- Essay 16 -->
+    <div class="essay-card">
+      <div class="essay-num">16</div>
+      <div class="essay-body">
+        <div class="essay-title" style="color:rgba(230,225,215,0.4);font-style:normal;text-transform:none;">untitled</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-progress">In Progress</span>
+      </div>
+    </div>
+
+    <!-- Essay 20 -->
+    <div class="essay-card">
+      <div class="essay-num">20</div>
+      <div class="essay-body">
+        <div class="essay-title" style="color:rgba(230,225,215,0.4);font-style:normal;text-transform:none;">untitled</div>
+      </div>
+      <div class="essay-status-col">
+        <span class="essay-badge badge-progress">In Progress</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- COMPILATION -->
+<section id="compilation">
+  <div style="max-width:480px;margin:0 auto;padding:0 8% 80px;">
+    <div class="compilation-card">
+      <p class="compilation-label">Karcher Prince Publishing</p>
+      <div class="compilation-title">The Essays</div>
+      <div class="compilation-author">Nathan Carriker</div>
+      <p class="compilation-desc">Selected essays from vergence.space, compiled for publication through Karcher Prince.</p>
+      <p class="compilation-desc" style="margin-top:12px;">Private essays only shared by invitation.</p>
+      <span class="btn-forthcoming">Forthcoming</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="footer-wordmark">vergence.space</span>
+    <span class="footer-copy">© 2026 Nathan Carriker · Karcher Prince Publishing · All Rights Reserved</span>
+  </div>
+  <div class="footer-links">
+    <a href="index.html">My Hangar</a>
+    <a href="index.html#identification">Identification</a>
+    <a href="a-silver-ring.html">A Silver Ring</a>
+    <a href="a-shimmering-light.html">A Shimmering Light</a>
+    <a href="essays.html">My Essays</a>
+    <a href="index.html#visuals">Visuals</a>
+    <a href="mixtape.html">My Mixtape</a>
+    <a href="index.html#fpv-teaser">bLogbook</a>
+    <a href="index.html#position-report">Position Report</a>
+  </div>
+</footer>
+
+<!-- IMAGE FILENAME LABELER -->
+<script>
+(function() {
+  var LBL = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(28,34,48,0.92);color:rgba(201,168,76,0.75);font-family:Cardo,serif;font-size:0.62rem;letter-spacing:0.18em;text-align:center;padding:12px;pointer-events:none;z-index:10;';
+  function label(el, name) {
+    el.style.position = 'relative';
+    var d = document.createElement('div');
+    d.style.cssText = LBL;
+    d.textContent = name;
+    el.appendChild(d);
+  }
+  // img tags — label only on failure
+  document.querySelectorAll('img').forEach(function(img) {
+    function handle() {
+      if (img.naturalWidth === 0) {
+        var name = decodeURIComponent(img.src.split('/').pop());
+        img.style.opacity = '0';
+        label(img.parentNode, name);
+      }
+    }
+    if (img.complete) handle();
+    else { img.onload = handle; img.onerror = handle; }
+  });
+  // CSS background containers — test load before labeling
+  document.querySelectorAll('[data-img]').forEach(function(el) {
+    var name = el.getAttribute('data-img');
+    var test = new Image();
+    test.onload = function() { /* loaded fine — do nothing */ };
+    test.onerror = function() { label(el, name); };
+    test.src = 'images/' + name;
+  });
+})();
+</script>
+
+</body>
+</html>
