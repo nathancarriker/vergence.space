@@ -749,6 +749,16 @@
     }
     .author-photo { width: 140px; height: 170px; }
   }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; margin-left:auto; background:none; border:none; }
+  .hamburger span { display:block; width:24px; height:2px; background:rgba(143,163,184,0.75); transition:all 0.3s ease; }
+  .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity:0; }
+  .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+  .mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(10,10,15,0.98); z-index:99; flex-direction:column; justify-content:center; align-items:center; }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { color:rgba(143,163,184,0.75); text-decoration:none; font-family:"Cardo",serif; font-size:1.3rem; letter-spacing:0.14em; padding:18px 40px; border-bottom:1px solid rgba(143,163,184,0.1); width:100%; text-align:center; transition:color 0.3s ease; }
+  .mobile-menu a:hover { color:var(--gold); }
+  @media (max-width:768px) { nav > a, nav > .dropdown { display:none; } .hamburger { display:flex; } nav { justify-content:flex-end; background:rgba(10,10,15,0.85); } }
 </style>
 </head>
 <body>
@@ -771,12 +781,21 @@
   <a href="mixtape.html">My Mixtape</a>
   <a href="index.html#fpv-teaser">bLogbook</a>
   <a href="index.html#position-report">Position Report</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-
-<!-- ==============================
-     HERO
-============================== -->
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">My Hangar</a>
+  <a href="index.html#identification">Identification</a>
+  <a href="a-silver-ring.html" style="color:var(--gold);">A Silver Ring</a>
+  <a href="a-shimmering-light.html">A Shimmering Light</a>
+  <a href="essays.html">My Essays</a>
+  <a href="index.html#visuals">Visuals</a>
+  <a href="mixtape.html">My Mixtape</a>
+  <a href="index.html#fpv-teaser">bLogbook</a>
+  <a href="index.html#position-report">Position Report</a>
+</div> -->
 <section class="book-hero">
   <div data-img="lib.JPG" style="position:absolute;inset:0;z-index:0;"></div>
   <div class="book-hero-inner">
@@ -1165,7 +1184,8 @@
     <a href="mixtape.html">My Mixtape</a>
     <a href="a-shimmering-light.html">A Shimmering Light</a>
     <a href="index.html#position-report">Position Report</a>
-  </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
   <span class="footer-copy">© 2026 Nathan Carriker · Karcher Prince Publishing</span>
 </footer>
 
@@ -1198,9 +1218,19 @@
     var test = new Image();
     test.onload = function() { /* loaded fine — do nothing */ };
     test.onerror = function() { label(el, name); };
-    test.src = 'images/' + name;
+    test.src = '' + name;
   });
 })();
+</script>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
 </script>
 
 </body>
