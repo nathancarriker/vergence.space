@@ -1427,6 +1427,7 @@
     var cap      = document.getElementById('lightbox-caption');
     var thumbImg = thumb.querySelector('img');
 
+    img.style.cssText = 'max-width:94vw;max-height:92vh;width:auto;height:auto;display:block;filter:none;opacity:1;visibility:visible;cursor:default;';
     img.src = thumbImg.src;
     cap.textContent = caption;
     cap.classList.remove('fade-out');
