@@ -855,43 +855,52 @@
     inset: 0;
     background: rgba(5,6,10,0.96);
     z-index: 200;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    isolation: isolate;
   }
-  .lightbox-overlay.open { display: block; }
+  .lightbox-overlay.open { display: flex; }
+
+  .lightbox-inner {
+    position: relative;
+    max-width: 94vw;
+    max-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
 
   .lightbox-img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     max-width: 94vw;
     max-height: 92vh;
     width: auto;
     height: auto;
+    object-fit: contain;
     display: block;
-    filter: none;
-    opacity: 1;
     cursor: default;
-    z-index: 201;
+    filter: none !important;
+    opacity: 1 !important;
   }
 
   .lightbox-caption {
-    position: fixed;
-    bottom: 24px;
+    position: absolute;
+    bottom: 0;
     left: 0;
     right: 0;
-    text-align: center;
+    padding: 16px 32px 20px;
     font-family: 'Cardo', serif;
     font-style: italic;
     font-size: clamp(0.85rem, 1.4vw, 1.05rem);
     color: var(--pale);
     letter-spacing: 0.03em;
     line-height: 1.6;
+    text-align: center;
     text-shadow: 0 1px 6px rgba(0,0,0,0.9);
     opacity: 1;
     transition: opacity 1.5s ease;
     pointer-events: none;
-    z-index: 202;
   }
   .lightbox-caption.fade-out { opacity: 0; }
 
@@ -1399,9 +1408,11 @@
      LIGHTBOX
 ============================== -->
 <div class="lightbox-overlay" id="lightbox">
-  <button class="lightbox-close" onclick="closeLightbox()">close</button>
-  <img class="lightbox-img" id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
-  <div class="lightbox-caption" id="lightbox-caption"></div>
+  <div class="lightbox-inner" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">close</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
 </div>
 
 
