@@ -853,7 +853,7 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(5,6,10,0.96);
+    background: transparent;
     z-index: 200;
     justify-content: center;
     align-items: center;
@@ -861,6 +861,13 @@
     isolation: isolate;
   }
   .lightbox-overlay.open { display: flex; }
+  .lightbox-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(5,6,10,0.96);
+    z-index: 0;
+  }
 
   .lightbox-inner {
     position: relative;
