@@ -713,20 +713,7 @@
     transition: filter 0.4s ease, transform 0.4s ease;
   }
   .visual-thumb:hover img { filter: saturate(100%) brightness(1); transform: scale(1.04); }
-  .visual-thumb-label {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(transparent, rgba(10,10,15,0.85));
-    padding: 20px 12px 10px;
-    font-family: 'Cardo', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--silver);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  .visual-thumb:hover .visual-thumb-label { opacity: 1; }
+
 
   /* ============================================
      POSITION REPORT (Contact)
@@ -858,6 +845,78 @@
   }
   .footer-links a:hover { color: var(--gold); }
 
+
+  /* ============================================
+     LIGHTBOX
+  ============================================ */
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5,6,10,0.96);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .lightbox-overlay.open { display: flex; }
+
+  .lightbox-inner {
+    position: relative;
+    max-width: 94vw;
+    max-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-img {
+    max-width: 94vw;
+    max-height: 92vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    cursor: default;
+  }
+
+  .lightbox-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 28px 32px 20px;
+    background: linear-gradient(transparent, rgba(5,6,10,0.88));
+    font-family: 'Cardo', serif;
+    font-style: italic;
+    font-size: clamp(0.82rem, 1.4vw, 1rem);
+    color: rgba(232, 228, 218, 0.95);
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 1.5s ease;
+    pointer-events: none;
+  }
+  .lightbox-caption.fade-out { opacity: 0; }
+
+  .lightbox-close {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    font-family: 'Cardo', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(143,163,184,0.7);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 8px 0;
+    transition: color 0.3s ease;
+    z-index: 201;
+  }
+  .lightbox-close:hover { color: var(--gold); }
 
   /* ============================================
      HAMBURGER NAV
@@ -1162,37 +1221,65 @@
   </div>
 
   <div class="visuals-strip">
-    <div class="visual-thumb">
-      <img src="Cumulus_Moonrise.jpg" alt="Cumulus Moonrise" onerror="this.style.display='none'">
-      <div class="visual-thumb-label">Cumulus Moonrise</div>
+    <div class="visual-thumb" onclick="openLightbox(this,'Sunset at OSU airport, the day I first landed an airplane.')">
+      <img src="OSU_Mooney.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
     </div>
-    <div class="visual-thumb">
-      <img src="LPB_Sunrise.JPG" alt="La Paz Sunrise" onerror="this.style.display='none'">
-      <div class="visual-thumb-label">La Paz · Sunrise</div>
+    <div class="visual-thumb" onclick="openLightbox(this,'Windsock at Warrensburg, MO\u2019s Skyhaven airport, my alma mater, in the late 80\u2019s.')">
+      <img src="windsock-1008x538.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
     </div>
-    <div class="visual-thumb">
-      <img src="-80_sunrise.jpg" alt="Sierra Foothills Tule Fog" onerror="this.style.display='none'">
-      <div class="visual-thumb-label">Sierra Foothills · Tule Fog</div>
+    <div class="visual-thumb" onclick="openLightbox(this,'Air Midwest Metroliner II, loading for another run.')">
+      <img src="1916673_10208082483841460_3032330247148951425_n.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
     </div>
-    <div class="visual-thumb">
-      <img src="windsock-1008x538.jpg" alt="Twilight Windsock" onerror="this.style.display='none'">
-      <div class="visual-thumb-label">Twilight Windsock</div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="-80_tail_darkened.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
     </div>
-    <div class="visual-thumb">
-      <img src="IMG_2953.JPEG" alt="Canyon Country" onerror="this.style.display='none'">
-      <div class="visual-thumb-label">Canyon Country</div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="MIA.JPG" alt="" loading="lazy" onerror="this.style.display='none'">
     </div>
-    <div class="visual-thumb">
-      <img src="20150912_154213.jpg" alt="The Blues" onerror="this.style.display='none'">
-      <div class="visual-thumb-label">The Blues</div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="20250815_195624.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
     </div>
-    <div class="visual-thumb">
-      <img src="METRO.jpg" alt="Air Midwest Metroliner II" onerror="this.style.display='none'">
-      <div class="visual-thumb-label">Air Midwest · Metroliner II</div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="20251130_174316.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
     </div>
-    <div class="visual-thumb">
-      <img src="IMG_2882.jpg" alt="Shiprock NM" onerror="this.style.display='none'">
-      <div class="visual-thumb-label">Shiprock, NM</div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="ridersonthestorm2edited.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="20210409_204609.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="20230511_195504.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="20210917_193947.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="Cumulus_Moonrise.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="20220905_203008.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="20250614_204727.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="20250614_204652.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'Cath\u00e9drale Notre-Dame, Reims, France. My uncle was shot down only 3 miles north.')">
+      <img src="reims_church.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'The cathedral\u2019s famous \u2014 and haunting \u2014 Chagall windows.')">
+      <img src="Reims_chapel.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="IM.JPG" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="20251130_175836.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+    </div>
+    <div class="visual-thumb" onclick="openLightbox(this,'')">
+      <img src="mystery.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
     </div>
   </div>
 </section>
@@ -1314,10 +1401,63 @@
 
 
 <!-- ==============================
+     LIGHTBOX
+============================== -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">close</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+</div>
+
+
+<!-- ==============================
      SCRIPTS
 ============================== -->
 <script>
-  function updateCountdown() {
+  var _lbTimer = null;
+
+  function openLightbox(thumb, caption) {
+    var overlay = document.getElementById('lightbox');
+    var img     = document.getElementById('lightbox-img');
+    var cap     = document.getElementById('lightbox-caption');
+    var thumbImg = thumb.querySelector('img');
+
+    img.src = thumbImg.src;
+    cap.textContent = caption;
+    cap.classList.remove('fade-out');
+    cap.style.display = caption ? 'block' : 'none';
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    if (_lbTimer) clearTimeout(_lbTimer);
+    if (caption) {
+      _lbTimer = setTimeout(function() {
+        cap.classList.add('fade-out');
+      }, 10000);
+    }
+  }
+
+  function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+    var overlay = document.getElementById('lightbox');
+    var img     = document.getElementById('lightbox-img');
+    var cap     = document.getElementById('lightbox-caption');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    img.src = '';
+    cap.textContent = '';
+    cap.classList.remove('fade-out');
+    if (_lbTimer) { clearTimeout(_lbTimer); _lbTimer = null; }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox({target: document.getElementById('lightbox')});
+  });
+</script>
+
+
     const target = new Date('December 21, 2034 00:00:00').getTime();
     const now    = new Date().getTime();
     const diff   = target - now;
