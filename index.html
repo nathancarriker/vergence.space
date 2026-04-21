@@ -885,15 +885,15 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 28px 32px 20px;
-    background: linear-gradient(transparent, rgba(5,6,10,0.88));
+    padding: 16px 32px 20px;
     font-family: 'Cardo', serif;
     font-style: italic;
-    font-size: clamp(0.82rem, 1.4vw, 1rem);
-    color: rgba(232, 228, 218, 0.95);
+    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    color: var(--pale);
     letter-spacing: 0.03em;
     line-height: 1.6;
     text-align: center;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.7);
     opacity: 1;
     transition: opacity 1.5s ease;
     pointer-events: none;
@@ -1403,7 +1403,7 @@
 <!-- ==============================
      LIGHTBOX
 ============================== -->
-<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+<div class="lightbox-overlay" id="lightbox">
   <div class="lightbox-inner" onclick="event.stopPropagation()">
     <button class="lightbox-close" onclick="closeLightbox()">close</button>
     <img class="lightbox-img" id="lightbox-img" src="" alt="">
@@ -1417,11 +1417,12 @@
 ============================== -->
 <script>
   var _lbTimer = null;
+  var _lbOpen  = false;
 
   function openLightbox(thumb, caption) {
-    var overlay = document.getElementById('lightbox');
-    var img     = document.getElementById('lightbox-img');
-    var cap     = document.getElementById('lightbox-caption');
+    var overlay  = document.getElementById('lightbox');
+    var img      = document.getElementById('lightbox-img');
+    var cap      = document.getElementById('lightbox-caption');
     var thumbImg = thumb.querySelector('img');
 
     img.src = thumbImg.src;
@@ -1430,6 +1431,10 @@
     cap.style.display = caption ? 'block' : 'none';
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
+    _lbOpen = false;
+
+    // Small delay before allowing overlay-click-to-close
+    setTimeout(function() { _lbOpen = true; }, 200);
 
     if (_lbTimer) clearTimeout(_lbTimer);
     if (caption) {
@@ -1439,8 +1444,8 @@
     }
   }
 
-  function closeLightbox(e) {
-    if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+  function closeLightbox() {
+    if (!_lbOpen) return;
     var overlay = document.getElementById('lightbox');
     var img     = document.getElementById('lightbox-img');
     var cap     = document.getElementById('lightbox-caption');
@@ -1449,11 +1454,16 @@
     img.src = '';
     cap.textContent = '';
     cap.classList.remove('fade-out');
+    _lbOpen = false;
     if (_lbTimer) { clearTimeout(_lbTimer); _lbTimer = null; }
   }
 
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLightbox({target: document.getElementById('lightbox')});
+    if (e.key === 'Escape') closeLightbox();
   });
 </script>
 
