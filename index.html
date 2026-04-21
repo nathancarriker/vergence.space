@@ -847,89 +847,6 @@
 
 
   /* ============================================
-     LIGHTBOX
-  ============================================ */
-  .lightbox-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: transparent;
-    z-index: 200;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    isolation: isolate;
-  }
-  .lightbox-overlay.open { display: flex; }
-  .lightbox-overlay::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(5,6,10,0.96);
-    z-index: 0;
-  }
-
-  .lightbox-inner {
-    position: relative;
-    max-width: 94vw;
-    max-height: 92vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-  }
-
-  .lightbox-img {
-    max-width: 94vw;
-    max-height: 92vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    cursor: default;
-    filter: none !important;
-    opacity: 1 !important;
-  }
-
-  .lightbox-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 16px 32px 20px;
-    font-family: 'Cardo', serif;
-    font-style: italic;
-    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
-    color: var(--pale);
-    letter-spacing: 0.03em;
-    line-height: 1.6;
-    text-align: center;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.9);
-    opacity: 1;
-    transition: opacity 1.5s ease;
-    pointer-events: none;
-  }
-  .lightbox-caption.fade-out { opacity: 0; }
-
-  .lightbox-close {
-    position: fixed;
-    top: 24px;
-    right: 32px;
-    font-family: 'Cardo', serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(143,163,184,0.7);
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 8px 0;
-    transition: color 0.3s ease;
-    z-index: 202;
-  }
-  .lightbox-close:hover { color: var(--gold); }
-
-  /* ============================================
      HAMBURGER NAV
   ============================================ */
   .hamburger {
@@ -1414,72 +1331,123 @@
 <!-- ==============================
      LIGHTBOX
 ============================== -->
-<div class="lightbox-overlay" id="lightbox">
-  <div class="lightbox-inner" onclick="event.stopPropagation()">
-    <button class="lightbox-close" onclick="closeLightbox()">close</button>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="">
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
-</div>
+<!-- lightbox injected by JS -->
 
 
 <!-- ==============================
      SCRIPTS
 ============================== -->
 <script>
-  var _lbTimer = null;
-  var _lbOpen  = false;
+(function() {
+  var _timer = null;
+  var _open  = false;
+  var _overlay, _img, _cap, _close;
 
-  function openLightbox(thumb, caption) {
-    var overlay  = document.getElementById('lightbox');
-    var img      = document.getElementById('lightbox-img');
-    var cap      = document.getElementById('lightbox-caption');
+  function build() {
+    _overlay = document.createElement('div');
+    _overlay.id = 'lb-overlay';
+    _overlay.style.cssText = [
+      'display:none',
+      'position:fixed',
+      'top:0','left:0','right:0','bottom:0',
+      'background:rgba(5,6,10,0.96)',
+      'z-index:99999',
+      'cursor:pointer'
+    ].join(';');
+
+    _img = document.createElement('img');
+    _img.style.cssText = [
+      'position:absolute',
+      'top:50%','left:50%',
+      'transform:translate(-50%,-50%)',
+      'max-width:94vw','max-height:92vh',
+      'width:auto','height:auto',
+      'display:block',
+      'filter:none',
+      'opacity:1',
+      'z-index:100000',
+      'cursor:default',
+      'box-shadow:0 0 60px rgba(0,0,0,0.8)'
+    ].join(';');
+    _img.addEventListener('click', function(e) { e.stopPropagation(); });
+
+    _cap = document.createElement('div');
+    _cap.style.cssText = [
+      'position:fixed',
+      'bottom:24px','left:0','right:0',
+      'text-align:center',
+      'font-family:Cardo,serif',
+      'font-style:italic',
+      'font-size:1rem',
+      'color:#e8e4dc',
+      'letter-spacing:0.03em',
+      'line-height:1.6',
+      'text-shadow:0 1px 8px rgba(0,0,0,1)',
+      'pointer-events:none',
+      'z-index:100001',
+      'transition:opacity 1.5s ease'
+    ].join(';');
+
+    _close = document.createElement('button');
+    _close.textContent = 'close';
+    _close.style.cssText = [
+      'position:fixed',
+      'top:24px','right:32px',
+      'font-family:Cardo,serif',
+      'font-size:0.75rem',
+      'letter-spacing:0.3em',
+      'text-transform:uppercase',
+      'color:rgba(143,163,184,0.8)',
+      'background:none',
+      'border:none',
+      'cursor:pointer',
+      'z-index:100001',
+      'padding:8px'
+    ].join(';');
+    _close.addEventListener('click', function(e) { e.stopPropagation(); closeLightbox(); });
+
+    _overlay.appendChild(_img);
+    _overlay.appendChild(_cap);
+    _overlay.appendChild(_close);
+    _overlay.addEventListener('click', function() { closeLightbox(); });
+    document.body.appendChild(_overlay);
+  }
+
+  window.openLightbox = function(thumb, caption) {
+    if (!_overlay) build();
     var thumbImg = thumb.querySelector('img');
-
-    img.style.cssText = 'max-width:94vw;max-height:92vh;width:auto;height:auto;display:block;filter:none;opacity:1;visibility:visible;cursor:default;';
-    img.src = thumbImg.src;
-    cap.textContent = caption;
-    cap.classList.remove('fade-out');
-    cap.style.display = caption ? 'block' : 'none';
-    overlay.classList.add('open');
+    _img.src = thumbImg.src;
+    _cap.textContent = caption || '';
+    _cap.style.opacity = '1';
+    _cap.style.display = caption ? 'block' : 'none';
+    _overlay.style.display = 'block';
     document.body.style.overflow = 'hidden';
-    _lbOpen = false;
-
-    // Small delay before allowing overlay-click-to-close
-    setTimeout(function() { _lbOpen = true; }, 200);
-
-    if (_lbTimer) clearTimeout(_lbTimer);
+    _open = false;
+    setTimeout(function() { _open = true; }, 300);
+    if (_timer) clearTimeout(_timer);
     if (caption) {
-      _lbTimer = setTimeout(function() {
-        cap.classList.add('fade-out');
-      }, 10000);
+      _timer = setTimeout(function() { _cap.style.opacity = '0'; }, 10000);
     }
-  }
+  };
 
-  function closeLightbox() {
-    if (!_lbOpen) return;
-    var overlay = document.getElementById('lightbox');
-    var img     = document.getElementById('lightbox-img');
-    var cap     = document.getElementById('lightbox-caption');
-    overlay.classList.remove('open');
+  window.closeLightbox = function() {
+    if (!_open) return;
+    _overlay.style.display = 'none';
+    _img.src = '';
+    _cap.textContent = '';
     document.body.style.overflow = '';
-    img.src = '';
-    cap.textContent = '';
-    cap.classList.remove('fade-out');
-    _lbOpen = false;
-    if (_lbTimer) { clearTimeout(_lbTimer); _lbTimer = null; }
-  }
-
-  document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target === this) closeLightbox();
-  });
+    _open = false;
+    if (_timer) { clearTimeout(_timer); _timer = null; }
+  };
 
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'Escape') window.closeLightbox();
   });
+})();
 </script>
 
-
+<script>
+  function updateCountdown() {
     const target = new Date('December 21, 2034 00:00:00').getTime();
     const now    = new Date().getTime();
     const diff   = target - now;
