@@ -560,17 +560,7 @@
     background: linear-gradient(to right, transparent, var(--gold), transparent);
   }
 
-  /* Civilian Uncle Rudy portrait background */
-  .reviews-section::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('Rudy_Carriker_768x933.jpg');
-    background-size: cover;
-    background-position: center center;
-    opacity: 0.22;
-    z-index: 0;
-  }
+  /* Reviews section - no background image */
 
   .reviews-inner {
     max-width: 900px;
@@ -762,39 +752,34 @@
 
   @media (max-width: 768px) {
     .book-hero::after {
-      opacity: 0.45;
-      background-size: 340px auto;
+      background-size: 300px auto;
       background-position: center top;
       background-repeat: no-repeat;
+      opacity: 0.45;
     }
     .synopsis-section::after {
       background-size: 220px auto;
-      opacity: 0.28;
+      background-position: center top;
       background-repeat: no-repeat;
+      opacity: 0.28;
     }
     .inspiration-section::after {
-      opacity: 0.20;
       background-size: 280px auto;
       background-position: center top;
       background-repeat: no-repeat;
+      opacity: 0.20;
     }
     .history-section::after {
-      opacity: 0.14;
       background-size: 340px auto;
-      background-position: center center;
+      background-position: center top;
       background-repeat: no-repeat;
+      opacity: 0.22;
     }
     .characters-section::after {
-      opacity: 0.14;
       background-size: 340px auto;
       background-position: center top;
       background-repeat: no-repeat;
-    }
-    .reviews-section::after {
-      opacity: 0.30;
-      background-size: 260px auto;
-      background-position: center top;
-      background-repeat: no-repeat;
+      opacity: 0.14;
     }
   }
 </style>
@@ -833,7 +818,7 @@
   <a href="mixtape.html">My Mixtape</a>
   <a href="index.html#fpv-teaser">bLogbook</a>
   <a href="index.html#position-report">Position Report</a>
-</div> -->
+</div>
 <section class="book-hero">
   <div data-img="lib.JPG" style="position:absolute;inset:0;z-index:0;"></div>
   <div class="book-hero-inner">
