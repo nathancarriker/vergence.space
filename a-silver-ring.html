@@ -759,6 +759,33 @@
   .mobile-menu a { color:rgba(143,163,184,0.75); text-decoration:none; font-family:"Cardo",serif; font-size:1.3rem; letter-spacing:0.14em; padding:18px 40px; border-bottom:1px solid rgba(143,163,184,0.1); width:100%; text-align:center; transition:color 0.3s ease; }
   .mobile-menu a:hover { color:var(--gold); }
   @media (max-width:768px) { nav > a, nav > .dropdown { display:none; } .hamburger { display:flex; } nav { justify-content:flex-end; background:rgba(10,10,15,0.85); } }
+
+  @media (max-width: 768px) {
+    .book-hero::after {
+      opacity: 0.45;
+      background-position: center top;
+    }
+    .synopsis-section::after {
+      background-size: 260px auto;
+      opacity: 0.28;
+    }
+    .inspiration-section::after {
+      opacity: 0.20;
+      background-position: center top;
+    }
+    .history-section::after {
+      opacity: 0.14;
+      background-position: center center;
+    }
+    .characters-section::after {
+      opacity: 0.14;
+      background-position: center top;
+    }
+    .reviews-section::after {
+      opacity: 0.30;
+      background-position: center top;
+    }
+  }
 </style>
 </head>
 <body>
