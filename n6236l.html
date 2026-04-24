@@ -101,7 +101,7 @@
     background-color: #050810;
     background-size: cover;
     background-position: center 40%;
-    filter: brightness(0.65) saturate(0.70);
+    filter: none;
     animation: distantLight 28s ease-in-out infinite;
   }
 
@@ -117,7 +117,7 @@
   .essay-hero-vignette {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(10,10,15,0.92) 0%, rgba(10,10,15,0.2) 50%, transparent 100%);
+    background: none;
     pointer-events: none;
   }
 
@@ -396,6 +396,12 @@
       background-size: cover;
       background-position: center center;
       filter: none !important;
+    }
+    .essay-hero-vignette {
+      background: none !important;
+    }
+    .essay-hero-bg::after {
+      opacity: 0 !important;
     }
   }
 </style>
