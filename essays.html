@@ -101,7 +101,7 @@
     background-color: #050810;
     background-size: cover;
     background-position: center center;
-    filter: brightness(0.75) saturate(0.80);
+    filter: brightness(0.85) saturate(0.80);
     animation: distantLight 28s ease-in-out infinite;
   }
 
@@ -589,6 +589,12 @@
       background-size: cover;
       background-position: 20% bottom;
       filter: none !important;
+    }
+    .page-hero-vignette {
+      background: none !important;
+    }
+    .page-hero-bg::after {
+      opacity: 0 !important;
     }
   }
   .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; margin-left:auto; background:none; border:none; }
