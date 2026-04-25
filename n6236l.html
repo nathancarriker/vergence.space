@@ -106,13 +106,22 @@
   }
 
   .essay-hero-bg::after {
-    display: none;
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom,
+        rgba(5, 8, 16, 0.55) 0%,
+        rgba(5, 8, 16, 0.18) 38%,
+        rgba(5, 8, 16, 0.08) 58%,
+        rgba(5, 8, 16, 0.72) 100%
+      );
   }
 
   .essay-hero-vignette {
     position: absolute;
     inset: 0;
-    background: none;
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(5, 8, 16, 0.45) 100%);
     pointer-events: none;
   }
 
@@ -197,9 +206,9 @@
 
   @keyframes distantLight {
     0%,  100% { opacity: 1; }
-    40%        { opacity: 0.965; }
+    40%        { opacity: 0.93; }
     41.5%      { opacity: 1.000; }
-    75%        { opacity: 0.972; }
+    75%        { opacity: 0.95; }
   }
 
   /* ============================================
@@ -237,7 +246,7 @@
   .essay-text {
     font-family: 'Cormorant', serif;
     font-size: clamp(1.05rem, 1.8vw, 1.2rem);
-    line-height: 1.95;
+    line-height: 1.6;
     color: rgba(232, 228, 218, 0.82);
     margin-bottom: 32px;
   }
@@ -390,10 +399,6 @@
     .essay-hero-bg {
       background-size: cover;
       background-position: center center;
-      filter: none !important;
-    }
-    .essay-hero-vignette {
-      background: none !important;
     }
   }
 </style>
